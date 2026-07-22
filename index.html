@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISEG Perú — Resultados 2026</title>
+<style>
+body{margin:0;padding:20px;background:#141414;font-family:system-ui,sans-serif;display:flex;justify-content:center}
+.wrap{max-width:1150px;width:100%}
+*{box-sizing:border-box}
+.sh{background:#232323;border-radius:12px;overflow:hidden;font-family:system-ui,sans-serif;color:#e7e7e7}
+.hdr{background:#1c1c1c;padding:15px 20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #3a3a3a}
+.logo{font-size:22px;font-weight:700;color:#fff;letter-spacing:.15em}
+.hdiv{width:1px;height:32px;background:#3a3a3a}
+.htit{font-size:16px;font-weight:500;color:#fff}
+.hsub{font-size:13px;color:#c5c5c5;margin-top:2px}
+.login-wrap{min-height:420px;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.login-card{background:#2b2b2b;border-radius:14px;padding:36px 34px;max-width:380px;width:100%;text-align:center}
+.login-inp{width:100%;background:#1a1a1a;border:1px solid #454545;border-radius:8px;padding:12px 14px;color:#fff;font-size:14px;outline:none;margin-top:16px;margin-bottom:10px}
+.login-btn{width:100%;background:#2bd5c4;color:#00403a;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
+.login-err{color:#f07070;font-size:12.5px;margin-top:8px;min-height:16px}
+.tabs{display:flex;background:#1a1a1a;border-bottom:1px solid #3a3a3a}
+.tab{padding:11px 18px;font-size:14px;font-weight:500;color:#c5c5c5;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent}
+.tab.on{color:#2bd5c4;border-bottom-color:#2bd5c4}
+.pg{display:none;padding:18px 20px}
+.pg.on{display:block}
+.card{background:#2b2b2b;border-radius:10px;padding:15px 17px;margin-bottom:11px}
+.kpi{background:#2b2b2b;border-radius:10px;padding:14px 16px}
+.klbl{font-size:12px;color:#c5c5c5;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
+.kval{font-size:26px;font-weight:500;color:#fff}
+.ksub{font-size:12px;color:#c5c5c5;margin-top:4px}
+.kv-t{color:#2bd5c4}.kv-r{color:#f07070}.kv-a{color:#f5c06a}
+.snum{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#2bd5c4;color:#00403a;font-size:12px;font-weight:700;margin-right:8px}
+.st{font-size:12.5px;font-weight:500;color:#c5c5c5;text-transform:uppercase;letter-spacing:.08em;margin:15px 0 10px;display:flex;align-items:center}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.br{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bl{font-size:13px;color:#c5c5c5;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bt{flex:1;background:#4d4d4d;border-radius:4px;height:17px;overflow:hidden}
+.bf{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:6px}
+.bv{font-size:11px;font-weight:500}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;padding:7px 8px;color:#c5c5c5;font-size:11.5px;text-transform:uppercase;border-bottom:1px solid #3a3a3a}
+.tbl td{padding:7px 8px;color:#e7e7e7;border-bottom:1px solid #333;font-size:13px}
+.bdg{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px}
+.cat-exc{background:#0a1a3a;color:#6090e0}.cat-sup{background:#00403a;color:#2bd5c4}.cat-cum{background:#1a2a1a;color:#6dd56d}
+.cat-req{background:#3a2c10;color:#f5c06a}.cat-no{background:#3a1515;color:#f07070}
+.bt-act{background:#0a2a0a;color:#6dd56d}.bt-ces{background:#3a1515;color:#f07070}
+.bt-asc{background:#0a2a0a;color:#6dd56d;font-weight:700}
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;width:220px}
+.nc{border-radius:6px;padding:10px 4px;text-align:center;cursor:pointer;border:2px solid transparent}
+.nc.sel{border-color:#ffffff80}
+.nn{font-size:20px;font-weight:700;color:#fff}
+.nq{font-size:10px;color:rgba(255,255,255,.75)}
+.qd{background:#2b2b2b;border-radius:10px;padding:15px 17px;flex:1;max-height:460px;overflow-y:auto}
+.big{background:#2b2b2b;border-radius:12px;padding:19px 22px;margin-bottom:14px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.leg-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;margin-bottom:6px}
+.vchart{display:flex;align-items:flex-end;gap:12px;height:120px}
+.vbar-wrap{display:flex;flex-direction:column;align-items:center;flex:1;height:100%}
+.vbar-cont{flex:1;display:flex;flex-direction:column;justify-content:flex-end;width:100%}
+.vbar{border-radius:5px 5px 0 0;width:100%;display:flex;align-items:flex-start;justify-content:center;padding-top:4px;min-height:4px}
+.thtr{background:#4d4d4d;border-radius:5px;height:26px;overflow:hidden;margin:7px 0 6px}
+.thf{height:100%;background:#2bd5c4;border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px}
+.delta-up{color:#6dd56d}.delta-down{color:#f07070}
+.bell-wrap{position:relative;flex:1;min-width:260px}
+.bell-tip{position:absolute;background:#111;border:1px solid #444;border-radius:6px;padding:7px 10px;font-size:11px;color:#fff;pointer-events:none;display:none;white-space:nowrap;z-index:10;box-shadow:0 4px 12px rgba(0,0,0,.5)}
+.bell-tip b{display:block;font-size:11.5px;margin-bottom:2px}
+.bell-dot{cursor:pointer}
+.srch-wrap{padding:11px 20px;background:#1a1a1a;border-bottom:1px solid #3a3a3a;display:flex;gap:10px;align-items:center;position:relative}
+.srch-inp{flex:1;background:#2b2b2b;border:1px solid #454545;border-radius:8px;padding:9px 14px;color:#fff;font-size:14px;outline:none;max-width:380px}
+.srch-res{background:#2b2b2b;border:1px solid #454545;border-radius:8px;padding:4px;max-height:280px;overflow-y:auto;position:absolute;z-index:200;width:380px;top:48px;left:20px;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.sri{padding:9px 11px;border-radius:5px;font-size:13px;color:#e7e7e7;line-height:1.4}
+.sri span{display:block;font-size:11.5px;color:#c5c5c5;margin-top:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="sh" id="app">
+  <div class="hdr"><div class="logo">ISEG</div><div class="hdiv"></div><div><div class="htit">Evaluación de Desempeño 2026</div><div class="hsub">Acceso restringido — Comité de Gerencia</div></div></div>
+  <div id="loginScreen" class="login-wrap">
+    <div class="login-card">
+      <div style="font-size:34px;margin-bottom:10px">🔒</div>
+      <div style="font-size:16px;font-weight:600;color:#fff;margin-bottom:6px">Acceso con contraseña</div>
+      <div style="font-size:12.5px;color:#c5c5c5">Ingresa la contraseña que se te asignó</div>
+      <input class="login-inp" id="passInp" type="password" placeholder="Contraseña" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <button class="login-btn" onclick="doLogin()">Ingresar</button>
+      <div class="login-err" id="loginErr"></div>
+    </div>
+  </div>
+  <div id="dashScreen" style="display:none">
+    <div class="srch-wrap">
+      <span style="font-size:16px;color:#c5c5c5">🔍</span>
+      <input class="srch-inp" id="gs" placeholder="Buscar colaborador por nombre..." oninput="doSearch(this.value)" onblur="setTimeout(()=>{document.getElementById('gr').style.display='none'},200)"/>
+      <div id="gr" class="srch-res"></div>
+    </div>
+    <div class="tabs" id="tabsBar"></div>
+    <div id="p1" class="pg on"></div>
+    <div id="p2" class="pg"></div>
+    <div id="p3" class="pg"></div>
+    <div id="p4" class="pg"></div>
+    <div id="p5" class="pg"></div>
+  </div>
+</div>
+</div>
+<script>
+function getCat(p){
+  if(p>=95)return{l:'Resultado Excepcional',c:'cat-exc'};
+  if(p>=85)return{l:'Supera las Expectativas',c:'cat-sup'};
+  if(p>=70)return{l:'Cumple con lo Esperado',c:'cat-cum'};
+  if(p>=40)return{l:'Requiere Mejora',c:'cat-req'};
+  return{l:'No Cumple con el Estándar',c:'cat-no'};
+}
+const QCOLS={9:"#2bd5c4",8:"#3ab8aa",7:"#5dcaa5",6:"#d4a832",5:"#b89030",4:"#a08030",3:"#c05858",2:"#a84848",1:"#8a2828"};
+const QDESC={9:"Alto en objetivos y competencias.",8:"Alto en competencias, medio en objetivos.",7:"Alto en objetivos, medio en competencias.",6:"Desempeño medio en ambas.",3:"Bajo en ambas — zona de atención.",1:"Bajo en ambas — caso crítico."};
+
+// ===== ÁREAS (filtradas) =====
+const AREA_GH = {nombre:'Gestión Humana', avg26:71.8, avg25:72.6, n26:85, n25:62,
+  ppl:[["Juan Carlos Idanez Salguero","Jefe Corporativo De Cultura Y Desarrollo",91.8,82.0,0,1,9],["Jannet Nancy Torres Mendoza","Asistente De Bienestar",90.0,null,0,0,9],["Almendra Gianella Ortega Cruz","Asistente De Bienestar",89.1,null,0,0,9],["Lucero Edith Bustamante Rimarachin","Asistente De Bienestar",88.4,57.2,0,1,9],["Irving Javier Esquivel Rodriguez","Asistente De Atracción Del Talento Humano",88.3,null,0,0,8],["Christian Amador Rodriguez Torres","Analista De Atracción Del Talento Humano",87.8,81.8,0,1,8],["Erik Josset Challco Chapilliquen","Auxiliar De Atracción Del Talento Humano",85.5,null,0,0,8],["Yanelly Lorena Calderon Rojas","Asistente De Atracción Del Talento Humano",85.1,null,0,0,8],["Taylor David Diaz Marin","Asistente De Retención Del Talento Humano",85.0,87.0,0,0,6],["Leo Hurtado Ochoa","Auxiliar De Desarrollo Y Cultura Organizacional",83.9,null,0,0,8],["Yaneth Capia Condori","Auxiliar De Atracción Del Talento Humano",83.1,null,0,0,8],["Vanessa Frisel Rengifo Zevallos","Analista De Atracción Del Talento Humano",83.0,80.8,0,1,8],["Katherine Pierina Macalupu Cordova","Analista De Atracción Del Talento Humano",83.0,81.0,0,1,6],["Roxana Siapo Burgos","Asistente Administrativo / Sn4",82.7,74.7,0,1,7],["Maria Angelica Llasa Valverde","Coordinador(a) De Desarrollo Y Cultura Organizacional",82.6,84.8,0,1,6],["Doris Jeniffer Vilca Quispe","Analista De Atracción Del Talento Humano",81.0,79.4,0,1,6],["Ana Cristina Portocarrero Jaico","Asistente De Atracción Del Talento Humano",80.6,null,1,0,6],["Norma Elizabeth Iriarte Zegarra","Asistente De Retención Del Talento Humano",79.9,82.2,0,1,8],["Lidia Rodriguez Cruz","Asistente De Retención Del Talento Humano",79.3,86.7,0,1,8],["Stefanny Geraldine Castro Roque","Analista De Gestion De Personal",79.2,73.0,0,1,6],["Danny David Morales Feijoo","Analista De Compensaciones",78.9,71.8,0,1,7],["Mercedes Vilma Armas Chamorro","Asistente De Retención Del Talento Humano",78.2,82.2,0,1,6],["Maria Fernanda Jimenez Perea","Auxiliar De Atracción Del Talento Humano",78.2,null,1,0,6],["Cristhian Daniel Costales Soto","Asistente De Retención Del Talento Humano",77.5,null,0,0,6],["Mark Saik Alvarez Gil","Asistente De Retención Del Talento Humano",77.0,82.2,0,1,6],["Gerson Alonso Gonzalez Nuñez","Asistente De Desarrollo Y Cultura Organizacional",76.3,72.8,0,1,6],["Karina Milagros Alejandrina Becerra Flores","Analista De Compensaciones",75.9,61.2,0,1,7],["Aurea Mariel Velasquez Amado","Asistente De Atracción Del Talento Humano",75.8,null,0,0,6],["Guillermo Yancce Zurita","Asistente De Retención Del Talento Humano",75.8,82.2,0,1,6],["Wendy Esther Gomez Burga","Asistente De Retención Del Talento Humano",75.7,74.8,0,1,6],["Maria Carolina Escobar Ortiz","Auxiliar De Gestion De Personal",75.6,null,0,0,6],["Jose Miguel Tinco Cuya","Asistente De Gestion De Personal",75.1,73.5,0,1,6],["Yael Patricia Alexandra Herrera Herrera","Auxiliar De Desarrollo Y Cultura Organizacional",75.1,null,0,0,6],["Daniela Elizabeth Rivera Alvarez","Coordinador(a) Jr. De Atración Del Talento Humano",75.0,67.4,0,1,6],["Leonardo Daniel Huapaya Espino","Asistente De Retención Del Talento Humano",74.9,null,1,0,6],["Camila Berenice Curay Beltran","Auxiliar De Gestion De Personal",74.8,null,0,0,6],["Milagritos Veronica Siapo Burgos","Asistente De Retención Del Talento Humano",74.7,82.2,0,0,6],["Frank Muchaypina Alvarado","Asistente De Retención Del Talento Humano",74.4,null,0,0,6],["Karen Lisset Galvez Pena","Analista De Gestion De Personal",74.0,77.2,0,1,6],["Daniel Mauricio Quintana Ludeña","Analista De Atracción Del Talento Humano",73.6,71.2,0,1,6],["Juan David Bocanegra Valverde","Asistente De Atracción Del Talento Humano",73.6,null,0,0,6],["Maria Cristina Lenes Flores","Coordinador(a) De Compensaciones",71.8,73.0,0,1,6],["Greisy Paola Sovero Huatuco","Analista De Bienestar",71.7,null,1,0,6],["Elizabeth Ruiz Dionisio","Asistente De Retención Del Talento Humano",71.7,74.7,0,0,6],["Gilma Veronica Gongora Suarez","Asistente De Desarrollo Y Cultura Organizacional",71.3,80.4,0,1,6],["Rosa Liliana Challco Chapilliquen","Analista De Atracción Del Talento Humano",71.2,null,1,0,6],["Pedro Pablo Armanza Condori","Analista De Atracción Del Talento Humano",71.0,null,0,0,6],["Romina Francheska Simbron Bernaola","Asistente De Atracción Del Talento Humano",70.8,64.4,0,0,6],["Diego Alonso Parado Vega","Asistente De Atracción Del Talento Humano",70.7,null,0,0,6],["Henry Mechato Chocca","Asistente De Desarrollo Y Cultura Organizacional",70.3,null,0,0,6],["Irene Nohelly Marquez Rengifo","Coordinador(a) De Bienestar Social",68.9,69.4,0,1,6],["Abimael Oswaldo Quispe Saavedra","Asistente De Retención Del Talento Humano",68.5,87.0,0,1,6],["Liseth Liliana Isidro Velasque","Asistente De Atracción Del Talento Humano",68.3,null,1,0,6],["Dina Nereyda Gomez Yalico","Asistente De Bienestar",67.8,null,0,0,6],["Mariela Adriana Larico Rodriguez De Garratt","Asistente Administrativo / Sn2",67.5,71.0,0,1,6],["Noelia Katherine Taipicuri Quintana","Jefe De Atraccion Del Talento Humano",67.5,null,0,1,6],["Sayra Janeth Manrique Suclupe","Asistente Administrativo / Sn2",67.5,64.0,0,0,6],["Fiorella Amoretti Villanueva","Analista De Gestion De Personal",67.0,64.0,0,1,6],["Gisella Del Socorro Llacsahuanga Velasquez","Asistente Administrativo / Sn2",67.0,65.6,0,1,6],["Kevin Anival Marcelo Rojas","Auxiliar De Gestion De Personal",66.4,null,1,0,6],["Camila Rubi Cortez Alcantara","Auxiliar De Gestion De Personal",66.4,null,1,0,6],["Vanessa Antuaned Tapullima Salviati","Analista De Desarrollo Y Cultura Organizacional",66.2,null,0,0,6],["Josselyn Milagros Lastarria Palomino","Auxiliar De Atracción Del Talento Humano",65.8,null,0,0,6],["Samir Ivan Quispe Arcos","Auxiliar De Gestion De Personal",65.8,null,1,0,6],["Jeffry Antony Rivas Rivas","Auxiliar De Desarrollo Y Cultura Organizacional",65.5,null,0,0,6],["Maria Isarela Gonzales Chuquipiondo","Coordinador(a) De Gestion De Personal",65.4,60.6,0,1,6],["Martha Deysi Castillo Rodriguez","Asistente De Retención Del Talento Humano",65.0,82.2,0,1,6],["Mariela Elizabeth Vasquez Uriarte","Asistente De Retención Del Talento Humano",65.0,71.5,0,0,6],["Cristhian Alonso Neyra Espinoza","Asistente De Retención Del Talento Humano",65.0,82.2,0,0,6],["Vivian Alor Cabudivo","Jefe De Gestion De Personal Y Compensaciones",64.9,64.0,0,1,6],["Rudy Ivan Yantas Amaro","Asistente De Retención Del Talento Humano",63.1,74.7,0,1,6],["Erick Robinson Molina Pariona","Asistente De Retención Del Talento Humano",62.9,null,0,1,6],["Maria Del Rosario Rios Mendoza","Asistente De Retención Del Talento Humano",62.6,91.5,0,1,6],["Irene Recuay Paz","Analista De Gestion De Personal",61.3,57.0,0,1,6],["Brigete Zorrilla Cusihuaman","Auxiliar De Archivo",61.2,null,0,0,6],["Dyanna Janett Yanqui Quijandria","Analista De Compensaciones",60.8,null,0,0,6],["Marlene Loaiza Villafuerte","Asistente De Retención Del Talento Humano",59.5,null,0,1,6],["Franklin Wilfredy Diaz Fernandez","Asistente De Retención Del Talento Humano",57.9,null,0,0,6],["Rufina Bertila Robles Mendoza","Asistente De Desarrollo Y Cultura Organizacional",56.4,87.0,0,1,6],["Britney Maryoly Onofre Terres","Auxiliar De Gestion De Personal",54.7,null,1,0,3],["Nancy Pumaccajia Gutierrez","Asistente Administrativo / Sn2",53.0,64.0,0,1,3],["Ingrid Luz Puma Seibt","Coordinador(a) Senior De Atracción Del Talento Humano",52.5,56.4,0,1,3],["Isabel Alondra Aguado Hernandez","Asistente Administrativo / Sn2",50.8,57.9,0,0,3],["Alejandrina Elizabeth Sanchez Nieto","Analista De Desarrollo Y Cultura Organizacional",50.7,null,0,1,3],["Jackeline Camayo Montero","Asistente Administrativo / Sn2",47.1,47.3,0,0,3]]};
+const AREA_SGI = {nombre:'SGI (Sistema de Gestión Integrado y Sostenibilidad)', avg26:81.1, avg25:66.7, n26:7, n25:7,
+  ppl:[["Geraldine Zarumi Caceres Torres","Enfermero(a) Ocupacional",86.3,85.4,0,0,8],["Julio Alejandro Diaz Estica","Jefe De Auditoria Y Disciplina Operativa",85.5,81.7,0,0,7],["Gaston Eduardo Jauregui Ramos","Medico Ocupacional",83.9,84.6,1,0,8],["Karina Victoria Campusmana Silva","Analista De Sistema De Gestión Integrado Y Sostenibilidad",83.8,80.4,0,1,6],["Anderson Diego Chavez Garro","Analista De Sistema De Gestión Integrado Y Sostenibilidad",80.4,80.4,0,1,7],["Adrian Anibal Cereceda Caceres","Asistente De Sistema De Gestión Integrado",79.6,null,1,0,6],["Sandra Nataly Cerda Neyra","Subgerente De Sistema De Gestión Integrado Y Sostenibilidad",68.5,63.8,0,1,6]]};
+const AREA_FIN = {nombre:'Finanzas, Tesorería, Facturación y Contabilidad', avg26:65.2, avg25:66.8, n26:17, n25:19,
+  ppl:[["Stefanny Yanyna Vivanco Mallma","Analista De Facturacion",79.6,66.2,0,1,6],["Nadia Mercedes Lino Lopez","Jefe De Facturación Y Cobranza",75.6,69.7,0,1,6],["Lidia Elena Olivera Camones","Analista De Facturacion",74.6,78.0,0,1,6],["Carmen Rosa Carbajal Robles","Asistente De Facturación",72.4,48.6,0,1,6],["Yesenia Maricruz Linarez Del Aguila","Asistente De Facturación",71.5,72.3,0,0,6],["Miriam Milagros Flores Castillejo","Asistente De Facturación",70.0,72.3,0,1,6],["Fanny Sandra Perez Lavado","Analista De Facturacion",69.5,79.8,0,1,6],["Lizet Del Pilar Tomanguilla Arias","Subgerente De Finanzas",68.4,75.5,0,1,6],["Diego Armando Dominguez Fernandini","Coordinador(a) De Tesorería",67.9,64.0,0,1,6],["Emily Mireya Ruiz Altamirano","Asistente De Contabilidad",65.0,null,0,0,6],["Maryrosa Vicente Salazar","Asistente De Contabilidad",64.9,null,0,0,6],["Estefany Yesenia Vega Rojas","Asistente De Facturación",62.3,null,0,0,6],["Lucy Aurora Bellido Castro","Jefe De Contabilidad",60.2,74.2,0,1,6],["Edith Elena Bellido Olivera","Asistente De Contabilidad",58.5,null,0,0,6],["Ana Rosa Villegas Anticona","Analista De Contabilidad",58.1,62.4,0,1,6],["Sofia Teresa Llontop Espinoza","Analista De Contabilidad",52.1,61.8,0,1,3],["Harold Bustamante Lozano","Analista De Tesoreria",38.7,null,0,0,1]]};
+const AREA_LOG = {nombre:'Logística y Almacén', avg26:75.5, avg25:64.8, n26:11, n25:7,
+  ppl:[["Enrique Fernando Sayers Reyes","Asistente De Almacén",84.7,63.3,0,1,8],["Nicolas Jose Carlos Chumbes Chanca","Asistente De Almacén",83.1,71.5,0,0,8],["Rossmery Ruth Luna Evaristo","Asistente De Logistica",78.0,64.0,0,0,6],["Marcelo Andre Vargas Mendoza","Asistente De Almacén",78.0,null,1,0,6],["Pilar Alcazar Negreiros","Asistente De Almacén",76.3,null,0,0,6],["Oswaldo Sergio Villanueva Flores","Asistente De Almacén",75.9,64.0,0,1,6],["Susana Adela Montes Ayarza","Subgerente De Logistica",73.1,null,0,0,6],["Luis Gustavo Cancino Guardamino","Analista De Logística",72.7,70.5,0,0,6],["Jaime Roberto Jacinto Montalvan","Analista De Logística",71.9,64.8,0,1,6],["Victor Hugo Montoro Lopez","Coordinador(a)  De Logistica",69.5,55.3,0,1,6],["Jesus Andres Leandro Jaco","Asistente De Logistica",67.5,null,0,0,6]]};
+const AREA_VIVIAN = {nombre:'Gestión de Personal y Compensaciones', avg26:65.8, avg25:65.7, n26:22, n25:15,
+  ppl:[["Roxana Siapo Burgos","Asistente Administrativo / Sn4",82.7,74.7,0,1,7],["Stefanny Geraldine Castro Roque","Analista De Gestion De Personal",79.2,73.0,0,1,6],["Maria Carolina Escobar Ortiz","Auxiliar De Gestion De Personal",75.6,null,0,0,6],["Jose Miguel Tinco Cuya","Asistente De Gestion De Personal",75.1,73.5,0,1,6],["Camila Berenice Curay Beltran","Auxiliar De Gestion De Personal",74.8,null,0,0,6],["Karen Lisset Galvez Pena","Analista De Gestion De Personal",74.0,77.2,0,1,6],["Sayra Janeth Manrique Suclupe","Asistente Administrativo / Sn2",67.5,64.0,0,0,6],["Mariela Adriana Larico Rodriguez De Garratt","Asistente Administrativo / Sn2",67.5,71.0,0,1,6],["Fiorella Amoretti Villanueva","Analista De Gestion De Personal",67.0,64.0,0,1,6],["Gisella Del Socorro Llacsahuanga Velasquez","Asistente Administrativo / Sn2",67.0,65.6,0,1,6],["Kevin Anival Marcelo Rojas","Auxiliar De Gestion De Personal",66.4,null,1,0,6],["Camila Rubi Cortez Alcantara","Auxiliar De Gestion De Personal",66.4,null,1,0,6],["Samir Ivan Quispe Arcos","Auxiliar De Gestion De Personal",65.8,null,1,0,6],["Maria Isarela Gonzales Chuquipiondo","Coordinador(a) De Gestion De Personal",65.4,60.6,0,1,6],["Vivian Alor Cabudivo","Jefe De Gestion De Personal Y Compensaciones",64.9,64.0,0,1,6],["Irene Recuay Paz","Analista De Gestion De Personal",61.3,57.0,0,1,6],["Brigete Zorrilla Cusihuaman","Auxiliar De Archivo",61.2,null,0,0,6],["Dyanna Janett Yanqui Quijandria","Analista De Compensaciones",60.8,null,0,0,6],["Britney Maryoly Onofre Terres","Auxiliar De Gestion De Personal",54.7,null,1,0,3],["Nancy Pumaccajia Gutierrez","Asistente Administrativo / Sn2",53.0,64.0,0,1,3],["Isabel Alondra Aguado Hernandez","Asistente Administrativo / Sn2",50.8,57.9,0,0,3],["Jackeline Camayo Montero","Asistente Administrativo / Sn2",47.1,47.3,0,0,3]]};
+const AREA_NOELIA = {nombre:'Atracción del Talento Humano', avg26:76.0, avg25:71.0, n26:22, n25:14,
+  ppl:[["Irving Javier Esquivel Rodriguez","Asistente De Atracción Del Talento Humano",88.3,null,0,0,8],["Christian Amador Rodriguez Torres","Analista De Atracción Del Talento Humano",87.8,81.8,0,1,8],["Erik Josset Challco Chapilliquen","Auxiliar De Atracción Del Talento Humano",85.5,null,0,0,8],["Yanelly Lorena Calderon Rojas","Asistente De Atracción Del Talento Humano",85.1,null,0,0,8],["Yaneth Capia Condori","Auxiliar De Atracción Del Talento Humano",83.1,null,0,0,8],["Vanessa Frisel Rengifo Zevallos","Analista De Atracción Del Talento Humano",83.0,80.8,0,1,8],["Katherine Pierina Macalupu Cordova","Analista De Atracción Del Talento Humano",83.0,81.0,0,1,6],["Doris Jeniffer Vilca Quispe","Analista De Atracción Del Talento Humano",81.0,79.4,0,1,6],["Ana Cristina Portocarrero Jaico","Asistente De Atracción Del Talento Humano",80.6,null,1,0,6],["Maria Fernanda Jimenez Perea","Auxiliar De Atracción Del Talento Humano",78.2,null,1,0,6],["Aurea Mariel Velasquez Amado","Asistente De Atracción Del Talento Humano",75.8,null,0,0,6],["Daniela Elizabeth Rivera Alvarez","Coordinador(a) Jr. De Atración Del Talento Humano",75.0,67.4,0,1,6],["Juan David Bocanegra Valverde","Asistente De Atracción Del Talento Humano",73.6,null,0,0,6],["Daniel Mauricio Quintana Ludeña","Analista De Atracción Del Talento Humano",73.6,71.2,0,1,6],["Rosa Liliana Challco Chapilliquen","Analista De Atracción Del Talento Humano",71.2,null,1,0,6],["Pedro Pablo Armanza Condori","Analista De Atracción Del Talento Humano",71.0,null,0,0,6],["Romina Francheska Simbron Bernaola","Asistente De Atracción Del Talento Humano",70.8,64.4,0,0,6],["Diego Alonso Parado Vega","Asistente De Atracción Del Talento Humano",70.7,null,0,0,6],["Liseth Liliana Isidro Velasque","Asistente De Atracción Del Talento Humano",68.3,null,1,0,6],["Noelia Katherine Taipicuri Quintana","Jefe De Atraccion Del Talento Humano",67.5,null,0,1,6],["Josselyn Milagros Lastarria Palomino","Auxiliar De Atracción Del Talento Humano",65.8,null,0,0,6],["Ingrid Luz Puma Seibt","Coordinador(a) Senior De Atracción Del Talento Humano",52.5,56.4,0,1,3]]};
+const AREA_OPERACIONES = {nombre:'Operaciones', avg26:72.4, avg25:66.6, n26:150, n25:110,
+  ppl:[["Ligia Elena Lara Hernandez","Analista De Gestión Operativa / 12 Hrs",94.3,72.2,0,0,9],["Gabriel Fernando Cavero Imuda","Analista De Cga",91.8,null,0,1,9],["Luis Antonio Osco Bazalar","Analista De Gestión Operativa / 12 Hrs",90.7,63.0,0,1,9],["Renzo Alejandro Sanchez Minga","Analista De Gestión Operativa / 12 Hrs",90.0,62.8,0,1,8],["Jhonatan Fidel Castro Arotuma","Analista De Gestión Operativa / 12 Hrs",89.8,null,0,1,9],["Edith Mercedes Valencia Caycho","Coordinador(a) De Cuenta / Sn2",88.4,90.8,0,0,8],["Mario Kelmer Andi Chujutalli","Supervisor(a) De Provincia / N1",87.6,null,1,0,9],["Juan Diego Fernando Gutierrez Riveros","Coordinador(a) De Cuenta / Sn2",87.5,89.2,0,0,9],["David Edmundo Calderon Solano","Coordinador(a) De Cuenta / Sn2",87.3,null,0,1,9],["Carlos Freitez Rico","Coordinador(a) De Cuenta / Sn2",86.5,53.0,0,0,9],["Jorge Armando Villegas Carrasco","Coordinador(a) De Cuenta / Sn5",86.3,null,0,0,8],["Carlos Alberto Cardenas Solis","Coordinador(a) De Cuenta / Sn4",85.9,76.3,0,1,9],["Manuel Enrique Salazar Guzman","Coordinador(a) De Cuenta / Sn2",85.5,75.1,0,1,8],["Wendy Barrios Lazarte","Supervisor(a) De Cuenta / N1",85.5,null,0,0,8],["Jacomo Renzo Carrillo Saenz","Analista De Gestión Operativa / 12 Hrs",85.3,null,0,0,7],["Leonar Ali Pozo Reategui","Coordinador(a) De Cuenta / Sn2",85.0,65.5,0,0,8],["Carlos Alberto Ayala Perez","Coordinador(a) De Cuenta / Sn2",84.9,73.4,0,1,8],["Cesar Martin Moran Ynfantes","Coordinador(a) De Cuenta / Sn2",84.5,72.8,1,0,6],["Edgar Prado Quispe","Coordinador (a) De Operaciones",84.4,null,0,1,8],["Gerson Ivan Mori Piscoya","Analista De Gestión Operativa / 12 Hrs",84.2,64.0,0,1,6],["Esteban Paul Pichilingue Martinez","Analista De Planeamiento Operativo Senior / 12 Hrs",83.0,84.6,0,1,6],["Joselin Del Rosario Baldarrago Benites","Analista De Planeamiento Operativo / 08 Hrs",83.0,69.0,0,1,6],["Ana Cristina Ramirez Mendez","Analista De Planeamiento Operativo Senior / 12 Hrs",83.0,78.4,0,1,6],["Luis Elesban Licera Fernandez","Analista De Planeamiento Operativo / 12 Hrs",82.5,48.6,0,0,6],["Jeordino Gonzales Capinoa","Coordinador(a) De Cuenta / Sn2",82.0,70.6,0,0,7],["Justo Condori Blanco","Supervisor(a) De Cuenta / N1",81.9,null,0,0,6],["Cristian Danilo Sanchez Blanco","Supervisor(a) De Cuenta / N1",81.5,60.9,0,1,8],["Alexandra Jahaira Sanchez Leyva","Coordinador(a) De Cuenta / Sn2",81.0,70.3,0,1,6],["Albert Huaman Venegas","Coordinador(a) De Cuenta / Sn2",81.0,87.0,0,1,6],["Christian Mauricio Grandez Chavez","Analista De Planeamiento Operativo / 12 Hrs",81.0,null,0,1,6],["Carlos Alberto Pacheco Chauca","Supervisor(a) De Gestión Operativa / 08 Hrs",80.9,58.0,0,0,7],["Marco Antonio Colonia Depaz","Supervisor(a) De Provincia / N2",80.6,77.2,0,0,6],["Freddy Oswaldo Loaiza Lozano","Analista De Cga",80.5,null,0,1,6],["Carlos Arturo Nolasco Sullca","Analista De Gestión Operativa / 12 Hrs",79.7,null,0,0,7],["Sandra Carola Palomino Penaran","Supervisor(a) De Cuenta / N1",79.2,null,0,0,6],["Aguis Del Carmen Rivas Gonzalez","Supervisor(a) De Cuenta / N1",79.1,null,0,0,6],["Rodolfo Sandoval Villacorta","Coordinador(a) De Cuenta / Sn5",78.7,null,0,1,7],["Ninoska Arelis Yepez Yepez","Coordinador(a) De Cuenta / Sn2",78.6,null,0,0,6],["Jeison Ivan Vasquez Valdivia","Analista De Gestión Operativa / 12 Hrs",78.5,67.2,0,1,7],["Axzael Natanael Mendoza Loyo","Supervisor(a) De Provincia / No Resid",78.5,null,0,0,6],["Cesar Gilmar Guerrero Lescano","Analista De Planeamiento Operativo / 12 Hrs",78.2,67.2,0,0,6],["Jhonny Vasquez Guerra","Analista De Gestión Operativa / 08 Hrs",78.2,64.0,0,1,6],["Erica Roxana Gaona Garcia","Analista De Planeamiento Operativo Senior / 12 Hrs",78.0,78.4,0,1,6],["Jhon Brayan Rojas Quispe","Analista De Planeamiento Operativo / 12 Hrs",77.8,null,1,0,6],["Dannia Rivera Buitron","Analista De Gestión Operativa / 12 Hrs",77.5,52.0,0,1,6],["Mariana Isabel Fernandez Ordinola","Coordinador(a) De Control Financiero",77.0,null,0,1,6],["Alex Calle","Jefe De Operaciones",76.8,null,0,0,6],["Daniel Omar Marticorena Ojeda","Coordinador(a) De Cuenta / Sn2",76.6,null,0,0,6],["Miguel Vladimir Gomez Guerrero","Analista De Planeamiento Operativo / 12 Hrs",76.4,60.8,0,0,6],["Yris Renee Ordinola Cuadros","Analista De Gestión Operativa / 12 Hrs",76.2,null,0,0,6],["Alex Sender Torres","Coordinador(a) De Cuenta / Sn2",76.1,73.0,0,0,6],["Wilson Vergara Puertas","Coordinador(a) De Cuenta / Sn2",76.0,61.5,0,1,6],["Dario Ernesto Ocharan Rodriguez","Jefe De Operaciones Retail",76.0,77.1,0,1,6],["Jesus Demetrio Moreyra Flores","Analista De Gestión Operativa / 12 Hrs",75.9,52.0,0,0,7],["Roberto Carlos Crisostomo Diaz","Key Account Manager",75.8,77.6,0,1,6],["Dennis Johan Steve Chavez Jorge","Analista De Planeamiento Operativo / 12 Hrs",75.7,53.0,0,1,6],["Cesar David Roman Lazarte","Coordinador(a) De Cuenta / Sn2",75.4,79.8,0,0,6],["Jose Luis Briceno Ravines","Coordinador(a) De Cuenta / Sn2",75.3,null,0,1,6],["Julio Alberto Soto Bautista","Jefe Legal",75.1,null,0,1,6],["Jhair Antonio Tamariz Robles","Analista De Gestión Operativa / 12 Hrs",74.9,60.2,0,0,6],["Piero Orlando Nevado Mendizabal","Coordinador(a) De Cuenta / Sn2",74.8,36.0,0,1,6],["Victor Moises Juarez Alzamora","Supervisor(a) De Cuenta",74.6,null,0,1,6],["Karem Carolina Santamaria Davila","Supervisor(a) De Cuenta",74.6,62.8,0,0,6],["Luis Alfredo Moran Herrera","Supervisor(a) De Cuenta",74.5,62.1,0,1,6],["Gian Pierre Sandoval Huertas","Coordinador(a) De Provincia / N2",74.4,74.6,0,1,6],["Jose Armando Indriago Marin","Analista De Planeamiento Operativo / 12 Hrs",74.3,77.2,0,0,6],["Liliana Patricia Lopez Fernandez","Jefe De Operaciones Retail",74.2,null,0,0,6],["Fernando Jesus Coz Ramos","Coordinador(a) De Cuenta / Sn2",74.1,83.2,0,0,6],["Dayana Josefina Negron Negron","Supervisor(a) De Cuenta",73.9,71.5,0,0,6],["Franklin Rolando Garcia Arias","Analista De Cga",73.5,null,0,0,6],["Luz Marlene Ataipuma Durand","Supervisor(a) De Cuenta",73.3,null,0,1,6],["Alan Robinson Flores Quinto","Supervisor(a) De Gestión Operativa / 08 Hrs",73.3,58.0,0,1,6],["Jaime Andres Huamani Apaza","Coordinador(a) De Cuenta / Sn2",73.1,37.8,0,1,6],["Gabriel Cesar Lobo Vega","Key Account Manager",73.1,71.5,0,0,6],["Saulo Salomon Quiquin Paulino","Coordinador(a) De Cuenta / Sn2",72.9,59.5,0,0,6],["Arturo Francisco Garcia Gonzales","Supervisor(a) De Cuenta / N1",72.9,null,0,0,6],["Juan Jose Roman Boyanovich","Gerente De Operaciones",72.7,78.7,0,1,6],["Anibal Javier Escobedo Monsalve","Supervisor(a) De Cuenta / N1",72.6,null,0,0,6],["Judith Olivera Escobar","Coordinador(a) De Cuenta / Sn2",72.4,55.0,0,1,6],["Javier Armando Diaz Salvador","Coordinador(a) De Gestión Operativa / Sn2",72.4,72.8,0,1,6],["Percy Fernando Zapata Cordero","Supervisor(a) De Cuenta",72.2,null,0,0,6],["Fernando Abel Armas Trujillo","Coordinador(a) De Cuenta / Sn2",72.2,53.2,0,1,6],["Christian Alexander Zapana Vasquez","Coordinador(a) De Cuenta / Sn2",71.9,65.5,0,0,6],["Roberto Leonidas Castillo Guerrero","Key Account Manager",71.9,null,1,0,6],["Alejandro Luis Rodriguez Samanez","Supervisor(a) De Cuenta",71.8,null,0,0,6],["Dario Alejandro Cedeno Ascoy","Key Account Manager",71.7,72.7,0,1,6],["Alberto Urteaga Fuentes","Key Account Manager",71.7,71.5,0,0,6],["Hugo Ivan Solano Torres","Key Account Manager",71.7,77.6,0,1,6],["Calixto Beltran Cajo","Coordinador(a) De Provincia / Sn",71.5,68.0,0,1,7],["Jose Antonio Mitsuo Francisco Higinio Anlas","Analista De Gestión Operativa / 12 Hrs",71.4,null,0,0,6],["Gerardo Garcia Perez","Supervisor(a) De Cuenta",71.3,61.1,0,1,6],["Raul Cristobal Chocce Echevarria","Coordinador(a) De Cuenta / Sn2",71.2,null,0,1,7],["Jorge Bejar Melendez","Coordinador(a) De Cuenta / Sn5",71.0,63.6,0,1,6],["Italo Yovanni Gonzales Quispe","Analista De Cga",70.8,null,0,0,6],["Irly Giovana Anton Sernaque","Supervisor(a) De Provincia",70.8,64.0,0,0,6],["Juan Carlos Gonzalez Aira","Jefe De Gestión Operativa",70.7,70.2,0,0,6],["Juan Miguel Ortiz Uzuriaga","Jefe De Operaciones Retail",70.5,71.5,0,1,6],["Karin Magaly Moron Huaman","Coordinador(a) De Provincia / Sn",70.3,79.2,0,1,6],["Wilson Raul Grande Yucra","Supervisor(a) De Provincia",70.1,72.2,0,1,6],["Miguel Enrique Oviedo Galeano","Coordinador(a) De Cuenta / Sn2",69.3,36.5,0,1,6],["William Manuel Silva Minaya","Coordinador(a) De Cuenta / Sn2",68.1,50.8,0,1,6],["Sofia Alvarez Ortega","Supervisor(a) De Provincia / N2",68.0,null,0,0,6],["Daniel Alejandro Castillo Gonzalez","Jefe De Operaciones Retail",67.9,76.3,0,0,6],["Virginia Aranibar Salas","Analista De Gestión Operativa / 12 Hrs",67.8,null,0,1,7],["Miguel Antonio Valle Hernandez","Supervisor(a) De Cuenta",67.5,null,0,1,6],["Abner Pereda Olivos","Supervisor(a) De Cuenta / N1",66.5,null,0,0,6],["Ronald Alexander Tejada Tejada","Supervisor(a) De Provincia / N1",66.4,null,1,0,6],["Piero Jesus Navarro Quintana","Supervisor(a) De Provincia / N1",66.4,64.0,0,0,6],["Luis Arturo Berrio Villafuerte","Analista De Gestión Operativa / 08 Hrs",66.4,58.0,0,1,6],["Javier Carlos Manzano Laura","Jefe De Operaciones Retail",66.1,73.9,0,1,6],["Beatriz Fortunata Gastelu Grandez","Analista De Gestión Operativa / 08 Hrs",65.6,null,0,1,6],["Gerald Jeffri Lescano Palacios","Supervisor(a) De Provincia / No Resid",65.5,null,0,0,6],["Alberto Jose Pinango X","Analista De Gestión Operativa / 08 Hrs",65.5,null,0,0,6],["Michael Richard Cosme Casas","Coordinador(a) De Cuenta / Sn2",65.2,64.0,0,1,6],["Aldair Olivera Escobar","Supervisor(a) De Cuenta / N1",65.1,null,0,1,6],["Heidy Marily Sandoval Sernaque","Supervisor(a) De Provincia",65.1,62.8,0,1,6],["Warren Yeltsyn Gilvonio Llashag","Analista De Cga",65.1,49.2,0,1,6],["Miguel Angel Rivera Diaz","Supervisor(a) De Provincia",65.0,63.2,0,0,6],["Augusto Junior Elias Barrenechea","Supervisor(a) De Provincia",64.9,68.6,0,1,6],["Olga Lucero Bernabe Gavino","Supervisor(a) De Provincia / N1",64.9,57.2,0,1,6],["Samir Alcides Cabrera Estrella","Supervisor(a) De Cuenta",64.7,62.8,0,1,6],["Nery Viviana Rojas Porras","Supervisor(a) De Provincia",64.6,55.4,0,0,6],["Luis Qqueccano Mirano","Jefe De Operaciones De Vigilancia",64.5,null,0,1,6],["Yoon Reber Macuri Chuquichaico","Coordinador(a) De Cuenta / Sn2",64.3,53.8,0,1,6],["Carla Isabel Espinoza Sarmiento","Supervisor(a) De Provincia / N1",64.0,null,0,0,6],["Yaneth Alejandrina Valencia Alvarez","Jefe De Operaciones Region Sur",63.9,79.6,0,1,6],["Jose Alejandro Hurtado Silva","Supervisor(a) De Provincia / No Resid",63.7,null,1,0,6],["Marycarmen Perez Bustamante","Jefe De Operaciones Region Norte",63.6,80.2,0,1,6],["Antonio Salinas Contreras","Coordinador(a) De Cuenta / Sn2",63.5,83.5,0,1,6],["Elvia Mercedes Arredondo Catano","Coordinador(a) De Cuenta / Sn2",63.4,null,0,1,6],["Armando Felix Gomero","Jefe De Gestión Operativa",62.3,null,0,1,6],["Kenny Ronald Fernandez Vediz","Coordinador(a) De Provincia / Sn",61.3,null,0,0,6],["Luis Anthony Povis Lobo","Supervisor(a) De Provincia",60.6,null,0,0,6],["Abel Rampas Rampas","Supervisor(a) De Provincia / N1",59.3,null,1,0,6],["Carlos Alexis Lujan Melendez","Coordinador(a) De Provincia / Sn",59.1,null,1,0,6],["Jimmy Joel Espinoza Espinoza","Supervisor(a) De Provincia / No Resid",58.9,null,0,0,6],["Diego Julian Torres Reyna","Supervisor(a) De Provincia / Resid",58.9,null,0,0,6],["Christian Gonzalo Garcia Chicaisa","Jefe De Operaciones Region Norte",58.9,75.9,0,1,6],["Juan Alberto Vilchez Huarcaya","Analista De Cgo",58.4,null,0,1,6],["Jefferson Stuard Guidiche Canepa","Coordinador(a) De Cuenta / Sn3",58.1,67.2,0,1,6],["Anthony Mauro Alarcon Rivas","Coordinador(a) De Provincia / Sn",57.6,74.6,0,0,6],["Gonzalo Martin Delgado Vizcardo","Jefe De Operaciones Región Centro",57.4,null,0,0,6],["Virgilia Isabel Hernandez Gamero","Analista De Planeamiento Operativo / 12 Hrs",54.2,null,0,1,3],["Cristian Glorioso Montes Pajuelo","Jefe De Grupo / Rpy",54.2,63.6,0,0,3],["Angelica Esperanza Ruesta Sanchez","Coordinador(a) De Provincia / Sn",51.2,75.9,0,1,3],["Jorge Luis Bulnes Burgos","Supervisor(a) De Provincia / N1",50.6,null,0,1,3],["Edward Omar Calle Cotos","Coordinador(a) De Provincia / N3",50.6,48.6,0,1,3],["Hans Jonathan Peralta Suclupe","Supervisor(a) De Provincia",50.2,null,1,0,3],["Sandi Paola Diaz Avila","Jefe De Operaciones Region Sur",49.6,null,1,0,3],["Jorge Andree Fabian Rojas Fernandez","Analista De Planeamiento Operativo / 12 Hrs",47.5,null,1,0,3]]};
+
+// ===== USUARIOS (contraseña -> acceso) =====
+const USERS = {
+  'tapullima2004': {type:'full', name:'Vanessa Tapullima'},
+  'roman8421': {type:'full', name:'Juan José Roman'},
+  'vargas1937': {type:'full', name:'Yohan Vargas'},
+  'kleiner6058': {type:'full', name:'Melanie Kleiner'},
+  'idanez3312': {type:'area', name:'Juan Carlos Idanez', area:AREA_GH},
+  'cerda7749': {type:'area', name:'Sandra Cerda', area:AREA_SGI},
+  'tomanguilla2085': {type:'area', name:'Lizet Tomanguilla', area:AREA_FIN},
+  'montes9163': {type:'area', name:'Susana Montes', area:AREA_LOG},
+  'alor4527': {type:'area', name:'Vivian Alor', area:AREA_VIVIAN},
+  'taipicuri6690': {type:'area', name:'Noelia Taipicuri', area:AREA_NOELIA},
+  'cedeno1854': {type:'area', name:'Darío Cedeño', area:AREA_OPERACIONES},
+  'crisostomo7302': {type:'area', name:'Roberto Crisostomo', area:AREA_OPERACIONES},
+};
+
+let currentUser = null;
+
+function buildTabs(isFull){
+  const bar = document.getElementById('tabsBar');
+  if(isFull){
+    bar.innerHTML = `
+      <button class="tab on" onclick="sp('p1')">① Diagnóstico</button>
+      <button class="tab" onclick="sp('p2')">② Nine box</button>
+      <button class="tab" onclick="sp('p3')">③ Cesados</button>
+      <button class="tab" onclick="sp('p4')">④ Plan 45 días</button>
+      <button class="tab" onclick="sp('p5')">⑤ Voz Top Talent</button>
+      <button class="tab" onclick="doLogout()" style="margin-left:auto;color:#f07070">Salir</button>
+    `;
+  } else {
+    bar.innerHTML = `
+      <button class="tab on" onclick="sp('p1')">① Diagnóstico</button>
+      <button class="tab" onclick="sp('p2')">② Nine box</button>
+      <button class="tab" onclick="doLogout()" style="margin-left:auto;color:#f07070">Salir</button>
+    `;
+  }
+}
+
+function doLogin(){
+  const pass = document.getElementById('passInp').value.trim();
+  const user = USERS[pass];
+  const err = document.getElementById('loginErr');
+  if(!user){ err.textContent = 'Contraseña incorrecta.'; return; }
+  err.textContent = '';
+  currentUser = user;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashScreen').style.display = 'block';
+  buildTabs(user.type==='full');
+  buildSearchIndex(user);
+  renderDiagnosticoGeneral();
+  if(user.type==='full'){
+    renderNineBoxFull();
+    renderCesados();
+    renderPlan45();
+    renderVozTalento();
+  } else {
+    renderNineBoxArea(user.area);
+  }
+  sp('p1');
+}
+function buildSearchIndex(user){
+  let idx = [];
+  if(user.type==='full'){
+    [9,8,7,6,3,1].forEach(q=>{
+      (FULL_Q[q]||[]).forEach(p=>idx.push({n:p[0],c:p[1],p26:p[2],p25:p[3],ces:p[4],ind:p[5],asc:p[6],q}));
+    });
+  } else {
+    user.area.ppl.forEach(p=>idx.push({n:p[0],c:p[1],p26:p[2],p25:p[3],ces:p[4],ind:p[5],q:p[6]}));
+  }
+  window._searchIdx = idx;
+}
+function doSearch(val){
+  const res = document.getElementById('gr');
+  if(!val || val.length<2){ res.style.display='none'; return; }
+  const hits = (window._searchIdx||[]).filter(p=>p.n.toLowerCase().includes(val.toLowerCase())).slice(0,10);
+  if(!hits.length){ res.style.display='none'; return; }
+  res.style.display='block';
+  res.innerHTML = hits.map(p=>{
+    const cat26 = getCat(p.p26);
+    const p25txt = (p.p25===null||p.p25===undefined) ? '-' : `${p.p25}%`;
+    let arrow = '';
+    if(p.p25!==null && p.p25!==undefined){
+      if(p.p26>p.p25) arrow = ' <span style="color:#6dd56d">▲</span>';
+      else if(p.p26<p.p25) arrow = ' <span style="color:#f07070">▼</span>';
+    }
+    return `<div class="sri"><strong>${p.n}</strong><span>${p.c} · Q${p.q} · 2025: ${p25txt} → 2026: ${p.p26}%${arrow} · <span class="bdg ${cat26.c}" style="font-size:10px">${cat26.l}</span></span></div>`;
+  }).join('');
+}
+function doLogout(){
+  currentUser = null;
+  document.getElementById('passInp').value = '';
+  document.getElementById('dashScreen').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+
+// ===== CAMPANA DE GAUSS (distribución de resultados) =====
+function bellCurveSVG(){
+  const cats = [
+    {l:'No cumple con el estándar', pct:0.33, n:1},
+    {l:'Requiere mejora', pct:35.5, n:109},
+    {l:'Cumple con lo esperado en el puesto', pct:52.12, n:160},
+    {l:'Supera las expectativas del puesto', pct:12.05, n:37},
+    {l:'Resultados excepcionales constantes', pct:0, n:0},
+  ];
+  const W=280, H=100, pad=18;
+  const maxPct = 55;
+  const pts = cats.map((c,i)=>{
+    const x = pad + i*((W-2*pad)/(cats.length-1));
+    const y = H - pad - (c.pct/maxPct)*(H-2*pad-14);
+    return {x,y,...c};
+  });
+  // Smooth path (catmull-rom to bezier approx)
+  function smoothPath(pts){
+    let d = `M ${pts[0].x} ${pts[0].y}`;
+    for(let i=0;i<pts.length-1;i++){
+      const p0 = pts[i-1]||pts[i];
+      const p1 = pts[i];
+      const p2 = pts[i+1];
+      const p3 = pts[i+2]||p2;
+      const cp1x = p1.x + (p2.x-p0.x)/6;
+      const cp1y = p1.y + (p2.y-p0.y)/6;
+      const cp2x = p2.x - (p3.x-p1.x)/6;
+      const cp2y = p2.y - (p3.y-p1.y)/6;
+      d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+    }
+    return d;
+  }
+  const path = smoothPath(pts);
+  const dots = pts.map((p,i)=>`<circle class="bell-dot" cx="${p.x}" cy="${p.y}" r="4" fill="#2bd5c4" onmouseenter="showBellTip(event,${i})" onmouseleave="hideBellTip()" onclick="showBellTip(event,${i})"></circle>`).join('');
+  return `
+    <div style="font-size:11px;color:#c5c5c5;margin-bottom:4px;display:flex;align-items:center;gap:6px"><span style="width:9px;height:9px;background:#2bd5c4;border-radius:2px;display:inline-block"></span>Resultado final</div>
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+      <path d="${path}" fill="none" stroke="#2bd5c4" stroke-width="2.2"/>
+      ${dots}
+    </svg>
+    <div id="bellTip" class="bell-tip"></div>
+  `;
+}
+const BELL_CATS = [
+  {l:'No cumple con el estándar', pct:0.33, n:1},
+  {l:'Requiere mejora', pct:35.5, n:109},
+  {l:'Cumple con lo esperado en el puesto', pct:52.12, n:160},
+  {l:'Supera las expectativas del puesto', pct:12.05, n:37},
+  {l:'Resultados excepcionales constantes', pct:0, n:0},
+];
+function showBellTip(ev, i){
+  const c = BELL_CATS[i];
+  const tip = document.getElementById('bellTip');
+  if(!tip) return;
+  tip.innerHTML = `<b>${c.l}</b>Resultado final: ${c.pct}%<br>${c.n} colaboradores`;
+  tip.style.display = 'block';
+  const wrap = ev.target.closest('.bell-wrap');
+  const rect = ev.target.getBoundingClientRect();
+  const wrapRect = wrap.getBoundingClientRect();
+  tip.style.left = Math.min(Math.max((rect.left-wrapRect.left)-40,0), wrapRect.width-140) + 'px';
+  tip.style.top = (rect.top-wrapRect.top-58) + 'px';
+}
+function hideBellTip(){
+  const tip = document.getElementById('bellTip');
+  if(tip) tip.style.display='none';
+}
+
+// ===== HOJA 1: DIAGNÓSTICO GENERAL (igual para todos) =====
+function renderDiagnosticoGeneral(){
+  document.getElementById('p1').innerHTML = `
+    <div class="card"><div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:11px">Escala de calificaciones</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:7px">
+        <div class="leg-row" style="background:#0a1a3a"><div style="width:11px;height:11px;border-radius:50%;background:#6090e0"></div><div style="font-size:13px;font-weight:500;color:#6090e0;flex:1">Resultado Excepcional</div><div style="font-size:12px;color:#c5c5c5">95–100%</div></div>
+        <div class="leg-row" style="background:#082018"><div style="width:11px;height:11px;border-radius:50%;background:#2bd5c4"></div><div style="font-size:13px;font-weight:500;color:#2bd5c4;flex:1">Supera las Expectativas</div><div style="font-size:12px;color:#c5c5c5">85–94%</div></div>
+        <div class="leg-row" style="background:#0a1e0a"><div style="width:11px;height:11px;border-radius:50%;background:#6dd56d"></div><div style="font-size:13px;font-weight:500;color:#6dd56d;flex:1">Cumple con lo Esperado</div><div style="font-size:12px;color:#c5c5c5">70–84%</div></div>
+        <div class="leg-row" style="background:#201808"><div style="width:11px;height:11px;border-radius:50%;background:#f5c06a"></div><div style="font-size:13px;font-weight:500;color:#f5c06a;flex:1">Requiere Mejora</div><div style="font-size:12px;color:#c5c5c5">40–69%</div></div>
+        <div class="leg-row" style="background:#1a0808"><div style="width:11px;height:11px;border-radius:50%;background:#f07070"></div><div style="font-size:13px;font-weight:500;color:#f07070;flex:1">No Cumple</div><div style="font-size:12px;color:#c5c5c5">0–39%</div></div>
+      </div>
+    </div>
+    <div class="big">
+      <div style="text-align:center;min-width:140px"><div style="font-size:12px;color:#2bd5c4;font-weight:500">RESULTADO 2026</div><div style="font-size:52px;font-weight:700;color:#2bd5c4;line-height:1">72.8%</div><div style="font-size:13px;color:#c5c5c5;margin-top:5px">316 evaluados</div></div>
+      <div style="width:1px;height:80px;background:#454545"></div>
+      <div style="flex:1;min-width:220px"><div style="font-size:16px;font-weight:600;color:#fff;margin-bottom:6px">Cumple con lo Esperado</div>
+        <div style="font-size:13px;color:#c5c5c5;line-height:1.6">Categoría <strong style="color:#6dd56d">Cumple con lo Esperado</strong> (70–84%). Brecha interna: competencias (71.2%) vs objetivos (75.1%).</div>
+        <div style="font-size:12px;color:#c5c5c5;line-height:1.6;margin-top:7px">Comparado con 2025: <strong style="color:#f5c06a">Requiere Mejora</strong> (69.1%)</div>
+      </div>
+      <div style="width:1px;height:80px;background:#454545"></div>
+      <div class="bell-wrap">${bellCurveSVG()}</div>
+    </div>
+    <div class="st"><span class="snum">1</span>Comparativa 2025 → 2026</div>
+    <div class="card">
+      <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end">
+        <div style="flex:1;min-width:90px"><div style="font-size:11.5px;color:#c5c5c5;text-align:center;margin-bottom:8px">Evaluados</div>
+          <div class="vchart" style="gap:8px"><div class="vbar-wrap"><div class="vbar-cont"><div class="vbar" style="height:73%;background:#4a8f87"><span style="font-size:11px;color:#c9f2ed">232</span></div></div><div style="font-size:11px;color:#c5c5c5;text-align:center;margin-top:4px">2025</div></div><div class="vbar-wrap"><div class="vbar-cont"><div class="vbar" style="height:100%;background:#2bd5c4"><span style="font-size:11px;color:#00403a">316</span></div></div><div style="font-size:11px;color:#2bd5c4;text-align:center;margin-top:4px">2026</div></div></div></div>
+        <div style="flex:1;min-width:90px"><div style="font-size:11.5px;color:#c5c5c5;text-align:center;margin-bottom:8px">Objetivos %</div>
+          <div class="vchart" style="gap:8px"><div class="vbar-wrap"><div class="vbar-cont"><div class="vbar" style="height:97%;background:#4a8f87"><span style="font-size:11px;color:#c9f2ed">73.1%</span></div></div><div style="font-size:11px;color:#c5c5c5;text-align:center;margin-top:4px">2025</div></div><div class="vbar-wrap"><div class="vbar-cont"><div class="vbar" style="height:100%;background:#2bd5c4"><span style="font-size:11px;color:#00403a">75.1%</span></div></div><div style="font-size:11px;color:#2bd5c4;text-align:center;margin-top:4px">2026</div></div></div></div>
+        <div style="flex:1;min-width:90px"><div style="font-size:11.5px;color:#c5c5c5;text-align:center;margin-bottom:8px">Competencias %</div>
+          <div class="vchart" style="gap:8px"><div class="vbar-wrap"><div class="vbar-cont"><div class="vbar" style="height:93%;background:#4a8f87"><span style="font-size:11px;color:#c9f2ed">66.5%</span></div></div><div style="font-size:11px;color:#c5c5c5;text-align:center;margin-top:4px">2025</div></div><div class="vbar-wrap"><div class="vbar-cont"><div class="vbar" style="height:100%;background:#2bd5c4"><span style="font-size:11px;color:#00403a">71.2%</span></div></div><div style="font-size:11px;color:#2bd5c4;text-align:center;margin-top:4px">2026</div></div></div></div>
+        <div style="flex:1;min-width:90px"><div style="font-size:11.5px;color:#c5c5c5;text-align:center;margin-bottom:8px">Resultado general</div>
+          <div class="vchart" style="gap:8px"><div class="vbar-wrap"><div class="vbar-cont"><div class="vbar" style="height:95%;background:#f5c06a"><span style="font-size:11px;color:#3a2c10">69.1%</span></div></div><div style="font-size:11px;color:#f5c06a;text-align:center;margin-top:4px">2025</div></div><div class="vbar-wrap"><div class="vbar-cont"><div class="vbar" style="height:100%;background:#2bd5c4"><span style="font-size:11px;color:#00403a">72.8%</span></div></div><div style="font-size:11px;color:#2bd5c4;text-align:center;margin-top:4px">2026</div></div></div></div>
+      </div>
+      <div style="font-size:12px;color:#c5c5c5;margin-top:10px;padding-top:9px;border-top:1px solid #454545">La evaluación 2026 incorporó metodología 270° por primera vez</div>
+    </div>
+    <div class="st"><span class="snum">2</span>KPIs generales</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:9px;margin-bottom:14px">
+      <div class="kpi"><div class="klbl">Evaluados</div><div class="kval kv-t">307/316</div><div class="ksub">con resultado líder</div></div>
+      <div class="kpi"><div class="klbl">Alcance</div><div class="kval kv-t">97.2%</div><div class="ksub">del proceso</div></div>
+      <div class="kpi"><div class="klbl">Activos</div><div class="kval">285</div><div class="ksub">de 315 · 1 en licencia</div></div>
+      <div class="kpi"><div class="klbl">Cesados</div><div class="kval kv-r">29</div><div class="ksub">en el ciclo</div></div>
+      <div class="kpi"><div class="klbl">Top Talent</div><div class="kval kv-t">17</div><div class="ksub">cuadrante 9</div></div>
+      <div class="kpi"><div class="klbl">Zona atención</div><div class="kval kv-r">15</div><div class="ksub">plan 45 días</div></div>
+    </div>
+    <div class="st"><span class="snum">3</span>Resultado por área</div>
+    <div class="card">
+      <div class="g2" style="gap:16px">
+        <div><div style="font-size:13px;color:#2bd5c4;font-weight:500;margin-bottom:8px">MEJORES</div>
+          <div class="br"><span class="bl" style="width:155px">SGI · 7 pers.</span><div class="bt"><div class="bf" style="width:81%;background:#2bd5c4"><span class="bv" style="color:#00403a">81.1%</span></div></div></div>
+          <div class="br"><span class="bl" style="width:155px">Plus Adm. · 11 pers.</span><div class="bt"><div class="bf" style="width:81%;background:#2bd5c4"><span class="bv" style="color:#00403a">81.0%</span></div></div></div>
+          <div class="br"><span class="bl" style="width:155px">Bienestar · 6 pers.</span><div class="bt"><div class="bf" style="width:79%;background:#3ab8aa"><span class="bv" style="color:#c9f2ed">79.3%</span></div></div></div>
+          <div class="br"><span class="bl" style="width:155px">Com. Interna · 6 pers.</span><div class="bt"><div class="bf" style="width:79%;background:#3ab8aa"><span class="bv" style="color:#c9f2ed">78.8%</span></div></div></div></div>
+        <div>
+          <div style="font-size:13px;color:#f07070;font-weight:500;margin-bottom:8px">MÁS BAJAS</div>
+          <div class="br"><span class="bl" style="width:205px">Gestión Personal y Comp. · 22 pers.</span><div class="bt"><div class="bf" style="width:66%;background:#f5c06a"><span class="bv" style="color:#3a2c10">65.8%</span></div></div></div>
+          <div class="br"><span class="bl" style="width:205px">Contabilidad · 6 pers.</span><div class="bt"><div class="bf" style="width:60%;background:#f07070"><span class="bv" style="color:#1a0a0a">59.8%</span></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="st"><span class="snum">4</span>Termómetro de Feedback</div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div><div style="font-size:15px;font-weight:500;color:#fff">Alcance del proceso</div></div>
+        <div style="font-size:28px;font-weight:700;color:#2bd5c4">75.5%</div>
+      </div>
+      <div class="thtr"><div class="thf" style="width:75.5%"><span style="font-size:12px;color:#00403a">225 de 298</span></div></div>
+      <div style="font-size:13px;color:#f07070">73 no recibieron feedback</div>
+      <div style="font-size:12px;color:#c5c5c5;margin-top:5px;margin-bottom:12px">↳ 50 activos · 22 cesados · 1 en licencia</div>
+      <div class="g3" style="gap:10px">
+        <div style="background:#333;border-radius:8px;padding:12px;text-align:center"><div style="font-size:21px;font-weight:500;color:#2bd5c4">4.58/5</div><div style="font-size:12px;color:#c5c5c5;margin-top:3px">Experiencia</div></div>
+        <div style="background:#333;border-radius:8px;padding:12px;text-align:center"><div style="font-size:21px;font-weight:500;color:#2bd5c4">83.3%</div><div style="font-size:12px;color:#c5c5c5;margin-top:3px">Claro y útil</div></div>
+        <div style="background:#333;border-radius:8px;padding:12px;text-align:center"><div style="font-size:21px;font-weight:500;color:#2bd5c4">93.1%</div><div style="font-size:12px;color:#c5c5c5;margin-top:3px">Ayuda a mejorar</div></div>
+      </div>
+    </div>
+  `;
+}
+
+// ===== HOJA 2 (ÁREA): filtrada =====
+function renderNineBoxArea(area){
+  const ppl = area.ppl;
+  const counts = {};
+  ppl.forEach(p=>{ counts[p[6]] = (counts[p[6]]||0)+1; });
+  const QORD=[[5,8,9],[2,6,7],[1,3,4]];
+  let ngHtml = '<div class="ng">';
+  QORD.forEach(row=>row.forEach(q=>{
+    const n = counts[q]||0;
+    ngHtml += `<div class="nc" style="background:${QCOLS[q]}" onclick="showQArea(${q})"><div class="nn">${n}</div><div class="nq">Q${q}</div></div>`;
+  }));
+  ngHtml += '</div>';
+
+  const cat26 = getCat(area.avg26);
+  const cat25 = getCat(area.avg25);
+  const delta = +(area.avg26-area.avg25).toFixed(1);
+  const deltaCls = delta>=0 ? 'delta-up' : 'delta-down';
+  const deltaSign = delta>=0?'+':'';
+  const arrow = delta>=0 ? '▲' : '▼';
+
+  document.getElementById('p2').innerHTML = `
+    <div class="card" style="background:#0a1a18;border:1px solid #2bd5c4"><div style="font-size:14px;font-weight:600;color:#2bd5c4;margin-bottom:5px">① Nine Box — ${area.nombre}</div>
+      <div style="font-size:13px;color:#c5c5c5;line-height:1.6">Posiciona a cada colaborador de tu área según <strong style="color:#fff">objetivos</strong> (horizontal) y <strong style="color:#fff">competencias</strong> (vertical).</div>
+    </div>
+    <div class="st" style="margin-top:0"><span class="snum">2</span>Matriz interactiva</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+      <div style="flex-shrink:0">${ngHtml}
+        <div style="margin-top:10px;font-size:10.5px;color:#c5c5c5">♾ Indeterminado</div>
+      </div>
+      <div class="qd" id="qdBox"><div style="font-size:14px;color:#c5c5c5">Selecciona un cuadrante para ver el detalle</div></div>
+    </div>
+    <div class="st"><span class="snum">3</span>Resultado final del área — evolución 2025 → 2026</div>
+    <div class="card">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end">
+        <div style="flex:1;min-width:120px">
+          <div class="vchart" style="gap:14px;height:110px">
+            <div class="vbar-wrap"><div class="vbar-cont"><div class="vbar" style="height:${(area.avg25/Math.max(area.avg25,area.avg26)*100).toFixed(0)}%;background:#7a7a7a"><span style="font-size:12px;color:#fff">${area.avg25}%</span></div></div><div style="font-size:12px;color:#c5c5c5;text-align:center;margin-top:5px">2025<br><span style="font-size:10px">${area.n25} pers.</span></div></div>
+            <div class="vbar-wrap"><div class="vbar-cont"><div class="vbar" style="height:${(area.avg26/Math.max(area.avg25,area.avg26)*100).toFixed(0)}%;background:#2bd5c4"><span style="font-size:12px;color:#00403a">${area.avg26}%</span></div></div><div style="font-size:12px;color:#2bd5c4;text-align:center;margin-top:5px">2026<br><span style="font-size:10px">${area.n26} pers.</span></div></div>
+          </div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:26px;font-weight:700" class="${deltaCls}">${arrow} ${deltaSign}${delta}pp</div>
+          <div style="font-size:11.5px;color:#c5c5c5;margin-top:4px">${delta>=0?'El área mejoró':'El área bajó'} respecto a 2025</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div><span class="bdg ${cat25.c}" style="font-size:11px">2025: ${cat25.l}</span></div>
+          <div><span class="bdg ${cat26.c}" style="font-size:11px">2026: ${cat26.l}</span></div>
+        </div>
+      </div>
+    </div>
+  `;
+  window._currentPpl = ppl;
+}
+function showQArea(q){
+  const ppl = window._currentPpl.filter(p=>p[6]===q).sort((a,b)=>b[2]-a[2]);
+  renderQTable(ppl, q, 'qdBox');
+}
+
+// ===== HOJA 2 (FULL): compañía completa =====
+const FULL_Q = {
+  9:[["Ligia Elena Lara Hernandez", "Analista De Gestión Operativa / 12 Hrs", 94.3, 72.2, 0, 0, 0], ["Ysabel Rodulfo Rodulfo", "Asistente Corporativa", 94.1, null, 0, 0, 0], ["Juan Carlos Idanez Salguero", "Jefe Corporativo De Cultura Y Desarrollo", 91.8, 82.0, 0, 1, 1], ["Gabriel Fernando Cavero Imuda", "Analista De Cga", 91.8, null, 0, 1, 0], ["Shusua Sofia Izquierdo Carrasco", "Coordinador(a) De Seguridad Electronica / N1", 91.4, 82.2, 0, 0, 1], ["Luis Antonio Osco Bazalar", "Analista De Gestión Operativa / 12 Hrs", 90.7, 63.0, 0, 1, 0], ["Jannet Nancy Torres Mendoza", "Asistente De Bienestar", 90.0, null, 0, 0, 0], ["Jhonatan Fidel Castro Arotuma", "Analista De Gestión Operativa / 12 Hrs", 89.8, null, 0, 1, 0], ["Almendra Gianella Ortega Cruz", "Asistente De Bienestar", 89.1, null, 0, 0, 0], ["Lucero Edith Bustamante Rimarachin", "Asistente De Bienestar", 88.4, 57.2, 0, 1, 1], ["Sandro Sebastian Begazo Carrion", "Analista De Seguridad Electrónica", 87.7, null, 0, 0, 0], ["Mario Kelmer Andi Chujutalli", "Supervisor(a) De Provincia / N1", 87.6, null, 1, 0, 0], ["Juan Diego Fernando Gutierrez Riveros", "Coordinador(a) De Cuenta / Sn2", 87.5, 89.2, 0, 0, 0], ["David Edmundo Calderon Solano", "Coordinador(a) De Cuenta / Sn2", 87.3, null, 0, 1, 0], ["Marco Enrique Cabanillas Palomino", "Analista De Seguridad Electrónica", 86.7, 84.5, 0, 0, 0], ["Carlos Freitez Rico", "Coordinador(a) De Cuenta / Sn2", 86.5, 53.0, 0, 0, 0], ["Carlos Alberto Cardenas Solis", "Coordinador(a) De Cuenta / Sn4", 85.9, 76.3, 0, 1, 0]],
+  8:[["Renzo Alejandro Sanchez Minga", "Analista De Gestión Operativa / 12 Hrs", 90.0, 62.8, 0, 1, 0], ["Edith Mercedes Valencia Caycho", "Coordinador(a) De Cuenta / Sn2", 88.4, 90.8, 0, 0, 0], ["Irving Javier Esquivel Rodriguez", "Asistente De Atracción Del Talento Humano", 88.3, null, 0, 0, 0], ["Christian Amador Rodriguez Torres", "Analista De Atracción Del Talento Humano", 87.8, 81.8, 0, 1, 0], ["Vladimir Socrates Ccoyllo Ccohua", "Analista De Seguridad Electrónica", 87.1, 86.2, 0, 1, 0], ["Jorge Armando Villegas Carrasco", "Coordinador(a) De Cuenta / Sn5", 86.3, null, 0, 0, 0], ["Geraldine Zarumi Caceres Torres", "Enfermero(a) Ocupacional", 86.3, 85.4, 0, 0, 0], ["Erik Josset Challco Chapilliquen", "Auxiliar De Atracción Del Talento Humano", 85.5, null, 0, 0, 0], ["Wendy Barrios Lazarte", "Supervisor(a) De Cuenta / N1", 85.5, null, 0, 0, 0], ["Manuel Enrique Salazar Guzman", "Coordinador(a) De Cuenta / Sn2", 85.5, 75.1, 0, 1, 0], ["Yanelly Lorena Calderon Rojas", "Asistente De Atracción Del Talento Humano", 85.1, null, 0, 0, 0], ["Leonar Ali Pozo Reategui", "Coordinador(a) De Cuenta / Sn2", 85.0, 65.5, 0, 0, 0], ["Carlos Alberto Ayala Perez", "Coordinador(a) De Cuenta / Sn2", 84.9, 73.4, 0, 1, 0], ["Enrique Fernando Sayers Reyes", "Asistente De Almacén", 84.7, 63.3, 0, 1, 0], ["Cruhis Anthony Torres Gonzales", "Analista De Control De Gestion", 84.7, null, 1, 0, 0], ["Edgar Prado Quispe", "Coordinador (a) De Operaciones", 84.4, null, 0, 1, 0], ["Gaston Eduardo Jauregui Ramos", "Medico Ocupacional", 83.9, 84.6, 1, 0, 0], ["Leo Hurtado Ochoa", "Auxiliar De Desarrollo Y Cultura Organizacional", 83.9, null, 0, 0, 1], ["Gustavo Francisco Cuadros Felix", "Analista De Control De Gestion", 83.2, null, 1, 0, 0], ["Nicolas Jose Carlos Chumbes Chanca", "Asistente De Almacén", 83.1, 71.5, 0, 0, 0], ["Yaneth Capia Condori", "Auxiliar De Atracción Del Talento Humano", 83.1, null, 0, 0, 0], ["Vanessa Frisel Rengifo Zevallos", "Analista De Atracción Del Talento Humano", 83.0, 80.8, 0, 1, 0], ["Cristian Danilo Sanchez Blanco", "Supervisor(a) De Cuenta / N1", 81.5, 60.9, 0, 1, 0], ["Norma Elizabeth Iriarte Zegarra", "Asistente De Retención Del Talento Humano", 79.9, 82.2, 0, 1, 0], ["Lidia Rodriguez Cruz", "Asistente De Retención Del Talento Humano", 79.3, 86.7, 0, 1, 0]],
+  7:[["Jhonatan Dennis Linares Linares", "Coordinador(a) De Control De Gestión", 87.0, 87.0, 0, 0, 1], ["Katherine Camila Melo Fernandez", "Auxiliar De Comunicacion Interna", 87.0, null, 0, 1, 0], ["Luis Angel Crisostomo Huamani", "Auxiliar De Seguridad Electronica", 87.0, null, 0, 0, 0], ["Jorge Leonel Aiquipa Vasquez", "Coordinador (a) De Comunicacion Interna Y Marketing", 85.8, 63.4, 0, 1, 0], ["Julio Alejandro Diaz Estica", "Jefe De Auditoria Y Disciplina Operativa", 85.5, 81.7, 0, 0, 0], ["Gianella Alexandra Chilca Sueros", "Auxiliar De Comunicacion Interna", 85.4, null, 0, 1, 0], ["Jacomo Renzo Carrillo Saenz", "Analista De Gestión Operativa / 12 Hrs", 85.3, null, 0, 0, 0], ["Angie Dayane Giraldo Medina", "Analista De Comunicación Interna", 82.8, 85.0, 0, 1, 0], ["Roxana Siapo Burgos", "Asistente Administrativo / Sn4", 82.7, 74.7, 0, 1, 0], ["Jeordino Gonzales Capinoa", "Coordinador(a) De Cuenta / Sn2", 82.0, 70.6, 0, 0, 0], ["Yasser Fernando Jara De La Puente", "Gerente De Proyectos", 81.7, null, 0, 1, 0], ["Carlos Alberto Pacheco Chauca", "Supervisor(a) De Gestión Operativa / 08 Hrs", 80.9, 58.0, 0, 0, 0], ["Diego Alonzo Raya Conde", "Analista De Seguridad Electrónica", 80.7, null, 0, 0, 0], ["Anderson Diego Chavez Garro", "Analista De Sistema De Gestión Integrado Y Sostenibilidad", 80.4, 80.4, 0, 1, 0], ["Carlos Arturo Nolasco Sullca", "Analista De Gestión Operativa / 12 Hrs", 79.7, null, 0, 0, 0], ["Danny David Morales Feijoo", "Analista De Compensaciones", 78.9, 71.8, 0, 1, 0], ["Rodolfo Sandoval Villacorta", "Coordinador(a) De Cuenta / Sn5", 78.7, null, 0, 1, 0], ["Jeison Ivan Vasquez Valdivia", "Analista De Gestión Operativa / 12 Hrs", 78.5, 67.2, 0, 1, 0], ["Karina Milagros Alejandrina Becerra Flores", "Analista De Compensaciones", 75.9, 61.2, 0, 1, 0], ["Jesus Demetrio Moreyra Flores", "Analista De Gestión Operativa / 12 Hrs", 75.9, 52.0, 0, 0, 0], ["Calixto Beltran Cajo", "Coordinador(a) De Provincia / Sn", 71.5, 68.0, 0, 1, 0], ["Raul Cristobal Chocce Echevarria", "Coordinador(a) De Cuenta / Sn2", 71.2, null, 0, 1, 0], ["Virginia Aranibar Salas", "Analista De Gestión Operativa / 12 Hrs", 67.8, null, 0, 1, 0]],
+  6:[["Erick Bryan Anaya Altamirano", "Analista De Soporte Tecnico", 85.7, 77.5, 0, 0, 1], ["Taylor David Diaz Marin", "Asistente De Retención Del Talento Humano", 85.0, 87.0, 0, 0, 0], ["Bryans Kenneth Martinez Quevedo", "Asistente De Sucamec", 85.0, null, 0, 0, 0], ["Cesar Martin Moran Ynfantes", "Coordinador(a) De Cuenta / Sn2", 84.5, 72.8, 1, 0, 0], ["Gerson Ivan Mori Piscoya", "Analista De Gestión Operativa / 12 Hrs", 84.2, 64.0, 0, 1, 0], ["Karina Victoria Campusmana Silva", "Analista De Sistema De Gestión Integrado Y Sostenibilidad", 83.8, 80.4, 0, 1, 0], ["Katherine Pierina Macalupu Cordova", "Analista De Atracción Del Talento Humano", 83.0, 81.0, 0, 1, 0], ["Joselin Del Rosario Baldarrago Benites", "Analista De Planeamiento Operativo / 08 Hrs", 83.0, 69.0, 0, 1, 0], ["Ana Cristina Ramirez Mendez", "Analista De Planeamiento Operativo Senior / 12 Hrs", 83.0, 78.4, 0, 1, 0], ["Esteban Paul Pichilingue Martinez", "Analista De Planeamiento Operativo Senior / 12 Hrs", 83.0, 84.6, 0, 1, 0], ["Maria Angelica Llasa Valverde", "Coordinador(a) De Desarrollo Y Cultura Organizacional", 82.6, 84.8, 0, 1, 0], ["Luis Elesban Licera Fernandez", "Analista De Planeamiento Operativo / 12 Hrs", 82.5, 48.6, 0, 0, 0], ["Justo Condori Blanco", "Supervisor(a) De Cuenta / N1", 81.9, null, 0, 0, 0], ["Jose Antonio Tello Jimenez", "Analista De Soporte Tecnico", 81.3, 75.0, 0, 0, 1], ["Albert Huaman Venegas", "Coordinador(a) De Cuenta / Sn2", 81.0, 87.0, 0, 1, 0], ["Alexandra Jahaira Sanchez Leyva", "Coordinador(a) De Cuenta / Sn2", 81.0, 70.3, 0, 1, 0], ["Doris Jeniffer Vilca Quispe", "Analista De Atracción Del Talento Humano", 81.0, 79.4, 0, 1, 0], ["Christian Mauricio Grandez Chavez", "Analista De Planeamiento Operativo / 12 Hrs", 81.0, null, 0, 1, 0], ["Marco Antonio Colonia Depaz", "Supervisor(a) De Provincia / N2", 80.6, 77.2, 0, 0, 0], ["Ana Cristina Portocarrero Jaico", "Asistente De Atracción Del Talento Humano", 80.6, null, 1, 0, 0], ["Freddy Oswaldo Loaiza Lozano", "Analista De Cga", 80.5, null, 0, 1, 0], ["Luis Alexander Camarena Vasquez", "Coordinador(a) De Seguridad Electronica / N1", 80.4, 82.2, 0, 0, 0], ["Adrian Anibal Cereceda Caceres", "Asistente De Sistema De Gestión Integrado", 79.6, null, 1, 0, 0], ["Stefanny Yanyna Vivanco Mallma", "Analista De Facturacion", 79.6, 66.2, 0, 1, 1], ["Sandra Carola Palomino Penaran", "Supervisor(a) De Cuenta / N1", 79.2, null, 0, 0, 0], ["Stefanny Geraldine Castro Roque", "Analista De Gestion De Personal", 79.2, 73.0, 0, 1, 0], ["Aguis Del Carmen Rivas Gonzalez", "Supervisor(a) De Cuenta / N1", 79.1, null, 0, 0, 0], ["Ninoska Arelis Yepez Yepez", "Coordinador(a) De Cuenta / Sn2", 78.6, null, 0, 0, 0], ["Axzael Natanael Mendoza Loyo", "Supervisor(a) De Provincia / No Resid En Prov", 78.5, null, 0, 0, 0], ["Mercedes Vilma Armas Chamorro", "Asistente De Retención Del Talento Humano", 78.2, 82.2, 0, 1, 0], ["Maria Fernanda Jimenez Perea", "Auxiliar De Atracción Del Talento Humano", 78.2, null, 1, 0, 0], ["Cesar Gilmar Guerrero Lescano", "Analista De Planeamiento Operativo / 12 Hrs", 78.2, 67.2, 0, 0, 0], ["Jhonny Vasquez Guerra", "Analista De Gestión Operativa / 08 Hrs", 78.2, 64.0, 0, 1, 0], ["Erica Roxana Gaona Garcia", "Analista De Planeamiento Operativo Senior / 12 Hrs", 78.0, 78.4, 0, 1, 0], ["Rossmery Ruth Luna Evaristo", "Asistente De Logistica", 78.0, 64.0, 0, 0, 0], ["Marcelo Andre Vargas Mendoza", "Asistente De Almacén", 78.0, null, 1, 0, 1], ["Jhon Brayan Rojas Quispe", "Analista De Planeamiento Operativo / 12 Hrs", 77.8, null, 1, 0, 0], ["Dannia Rivera Buitron", "Analista De Gestión Operativa / 12 Hrs", 77.5, 52.0, 0, 1, 0], ["Cristhian Daniel Costales Soto", "Asistente De Retención Del Talento Humano", 77.5, null, 0, 0, 0], ["Mark Saik Alvarez Gil", "Asistente De Retención Del Talento Humano", 77.0, 82.2, 0, 1, 0], ["Mariana Isabel Fernandez Ordinola", "Coordinador(a) De Control Financiero", 77.0, null, 0, 1, 0], ["Alex Calle", "Jefe De Operaciones", 76.8, null, 0, 0, 0], ["Daniel Omar Marticorena Ojeda", "Coordinador(a) De Cuenta / Sn2", 76.6, null, 0, 0, 0], ["Miguel Vladimir Gomez Guerrero", "Analista De Planeamiento Operativo / 12 Hrs", 76.4, 60.8, 0, 0, 0], ["Leoncio Mauro Espinoza Trujillo", "Supervisor(a) De Provincia / N2", 76.4, 70.6, 0, 0, 0], ["Pilar Alcazar Negreiros", "Asistente De Almacén", 76.3, null, 0, 0, 0], ["Gerson Alonso Gonzalez Nuñez", "Asistente De Desarrollo Y Cultura Organizacional", 76.3, 72.8, 0, 1, 0], ["Yris Renee Ordinola Cuadros", "Analista De Gestión Operativa / 12 Hrs", 76.2, null, 0, 0, 0], ["Alex Sender Torres", "Coordinador(a) De Cuenta / Sn2", 76.1, 73.0, 0, 0, 0], ["Wilson Vergara Puertas", "Coordinador(a) De Cuenta / Sn2", 76.0, 61.5, 0, 1, 0], ["Dario Ernesto Ocharan Rodriguez", "Jefe De Operaciones Retail", 76.0, 77.1, 0, 1, 0], ["Oswaldo Sergio Villanueva Flores", "Asistente De Almacén", 75.9, 64.0, 0, 1, 0], ["Roberto Carlos Crisostomo Diaz", "Key Account Manager", 75.8, 77.6, 0, 1, 0], ["Aurea Mariel Velasquez Amado", "Asistente De Atracción Del Talento Humano", 75.8, null, 0, 0, 0], ["Guillermo Yancce Zurita", "Asistente De Retención Del Talento Humano", 75.8, 82.2, 0, 1, 0], ["Dennis Johan Steve Chavez Jorge", "Analista De Planeamiento Operativo / 12 Hrs", 75.7, 53.0, 0, 1, 0], ["Wendy Esther Gomez Burga", "Asistente De Retención Del Talento Humano", 75.7, 74.8, 0, 1, 0], ["Nadia Mercedes Lino Lopez", "Jefe De Facturación Y Cobranza", 75.6, 69.7, 0, 1, 1], ["Maria Carolina Escobar Ortiz", "Auxiliar De Gestion De Personal", 75.6, null, 0, 0, 0], ["Tessi Valeria Rios Tuanama", "Abogado(a)", 75.5, null, 0, 0, 0], ["Cesar David Roman Lazarte", "Coordinador(a) De Cuenta / Sn2", 75.4, 79.8, 0, 0, 0], ["Jose Luis Briceno Ravines", "Coordinador(a) De Cuenta / Sn2", 75.3, null, 0, 1, 0], ["Jose Miguel Tinco Cuya", "Asistente De Gestion De Personal", 75.1, 73.5, 0, 1, 0], ["Yael Patricia Alexandra Herrera Herrera", "Auxiliar De Desarrollo Y Cultura Organizacional", 75.1, null, 0, 0, 0], ["Julio Alberto Soto Bautista", "Jefe Legal", 75.1, null, 0, 1, 0], ["Daniela Elizabeth Rivera Alvarez", "Coordinador(a) Jr. De Atración Del Talento Humano", 75.0, 67.4, 0, 1, 0], ["Jhair Antonio Tamariz Robles", "Analista De Gestión Operativa / 12 Hrs", 74.9, 60.2, 0, 0, 0], ["Leonardo Daniel Huapaya Espino", "Asistente De Retención Del Talento Humano", 74.9, null, 1, 0, 0], ["Camila Berenice Curay Beltran", "Auxiliar De Gestion De Personal", 74.8, null, 0, 0, 0], ["Piero Orlando Nevado Mendizabal", "Coordinador(a) De Cuenta / Sn2", 74.8, 36.0, 0, 1, 0], ["Milagritos Veronica Siapo Burgos", "Asistente De Retención Del Talento Humano", 74.7, 82.2, 0, 0, 0], ["Karem Carolina Santamaria Davila", "Supervisor(a) De Cuenta", 74.6, 62.8, 0, 0, 0], ["Victor Moises Juarez Alzamora", "Supervisor(a) De Cuenta", 74.6, null, 0, 1, 0], ["Lidia Elena Olivera Camones", "Analista De Facturacion", 74.6, 78.0, 0, 1, 0], ["Luis Alfredo Moran Herrera", "Supervisor(a) De Cuenta", 74.5, 62.1, 0, 1, 0], ["Gian Pierre Sandoval Huertas", "Coordinador(a) De Provincia / N2", 74.4, 74.6, 0, 1, 0], ["Frank Muchaypina Alvarado", "Asistente De Retención Del Talento Humano", 74.4, null, 0, 0, 0], ["Jose Armando Indriago Marin", "Analista De Planeamiento Operativo / 12 Hrs", 74.3, 77.2, 0, 0, 0], ["Liliana Patricia Lopez Fernandez", "Jefe De Operaciones Retail", 74.2, null, 0, 0, 0], ["Fernando Jesus Coz Ramos", "Coordinador(a) De Cuenta / Sn2", 74.1, 83.2, 0, 0, 0], ["Karen Lisset Galvez Pena", "Analista De Gestion De Personal", 74.0, 77.2, 0, 1, 0], ["Dayana Josefina Negron Negron", "Supervisor(a) De Cuenta", 73.9, 71.5, 0, 0, 0], ["Juan David Bocanegra Valverde", "Asistente De Atracción Del Talento Humano", 73.6, null, 0, 0, 0], ["Daniel Mauricio Quintana Ludeña", "Analista De Atracción Del Talento Humano", 73.6, 71.2, 0, 1, 0], ["Franklin Rolando Garcia Arias", "Analista De Cga", 73.5, null, 0, 0, 0], ["Luz Marlene Ataipuma Durand", "Supervisor(a) De Cuenta", 73.3, null, 0, 1, 0], ["Alan Robinson Flores Quinto", "Supervisor(a) De Gestión Operativa / 08 Hrs", 73.3, 58.0, 0, 1, 0], ["Jaime Andres Huamani Apaza", "Coordinador(a) De Cuenta / Sn2", 73.1, 37.8, 0, 1, 0], ["Lucero Melchorita Valentin Bernaola", "Abogado(a)", 73.1, null, 0, 0, 0], ["Susana Adela Montes Ayarza", "Subgerente De Logistica", 73.1, null, 0, 0, 0], ["Gabriel Cesar Lobo Vega", "Key Account Manager", 73.1, 71.5, 0, 0, 0], ["Saulo Salomon Quiquin Paulino", "Coordinador(a) De Cuenta / Sn2", 72.9, 59.5, 0, 0, 0], ["Arturo Francisco Garcia Gonzales", "Supervisor(a) De Cuenta / N1", 72.9, null, 0, 0, 0], ["Luis Gustavo Cancino Guardamino", "Analista De Logística", 72.7, 70.5, 0, 0, 0], ["Juan Jose Roman Boyanovich", "Gerente De Operaciones", 72.7, 78.7, 0, 1, 0], ["Anibal Javier Escobedo Monsalve", "Supervisor(a) De Cuenta / N1", 72.6, null, 0, 0, 0], ["Judith Olivera Escobar", "Coordinador(a) De Cuenta / Sn2", 72.4, 55.0, 0, 1, 0], ["Javier Armando Diaz Salvador", "Coordinador(a) De Gestión Operativa / Sn2", 72.4, 72.8, 0, 1, 0], ["Carmen Rosa Carbajal Robles", "Asistente De Facturación", 72.4, 48.6, 0, 1, 0], ["Percy Fernando Zapata Cordero", "Supervisor(a) De Cuenta", 72.2, null, 0, 0, 0], ["Fernando Abel Armas Trujillo", "Coordinador(a) De Cuenta / Sn2", 72.2, 53.2, 0, 1, 0], ["Roberto Leonidas Castillo Guerrero", "Key Account Manager", 71.9, null, 1, 0, 0], ["Christian Alexander Zapana Vasquez", "Coordinador(a) De Cuenta / Sn2", 71.9, 65.5, 0, 0, 0], ["Jaime Roberto Jacinto Montalvan", "Analista De Logística", 71.9, 64.8, 0, 1, 0], ["Maria Cristina Lenes Flores", "Coordinador(a) De Compensaciones", 71.8, 73.0, 0, 1, 0], ["Alejandro Luis Rodriguez Samanez", "Supervisor(a) De Cuenta", 71.8, null, 0, 0, 0], ["Alberto Urteaga Fuentes", "Key Account Manager", 71.7, 71.5, 0, 0, 0], ["Hugo Ivan Solano Torres", "Key Account Manager", 71.7, 77.6, 0, 1, 0], ["Dario Alejandro Cedeno Ascoy", "Key Account Manager", 71.7, 72.7, 0, 1, 0], ["Greisy Paola Sovero Huatuco", "Analista De Bienestar", 71.7, null, 1, 0, 0], ["Elizabeth Ruiz Dionisio", "Asistente De Retención Del Talento Humano", 71.7, 74.7, 0, 0, 0], ["Clarit Antonio Zavaleta Alejos", "Coordinador (a) De Operaciones", 71.5, null, 0, 1, 0], ["Daniel Paul Minaya Huamani", "Abogado(a)", 71.5, null, 0, 1, 0], ["Giannina Lucia Pestana Guglielmino", "Gerente De Gestion Humana", 71.5, null, 1, 0, 0], ["Yesenia Maricruz Linarez Del Aguila", "Asistente De Facturación", 71.5, 72.3, 0, 0, 0], ["Jose Antonio Mitsuo Francisco Higinio Anlas", "Analista De Gestión Operativa / 12 Hrs", 71.4, null, 0, 0, 0], ["Gilma Veronica Gongora Suarez", "Asistente De Desarrollo Y Cultura Organizacional", 71.3, 80.4, 0, 1, 0], ["Gerardo Garcia Perez", "Supervisor(a) De Cuenta", 71.3, 61.1, 0, 1, 0], ["Dania Weil Napadenschi", "Jefe De Marketing", 71.3, null, 0, 1, 0], ["Rosa Liliana Challco Chapilliquen", "Analista De Atracción Del Talento Humano", 71.2, null, 1, 0, 0], ["Pedro Pablo Armanza Condori", "Analista De Atracción Del Talento Humano", 71.0, null, 0, 0, 0], ["Jorge Bejar Melendez", "Coordinador(a) De Cuenta / Sn5", 71.0, 63.6, 0, 1, 0], ["Italo Yovanni Gonzales Quispe", "Analista De Cga", 70.8, null, 0, 0, 0], ["Irly Giovana Anton Sernaque", "Supervisor(a) De Provincia", 70.8, 64.0, 0, 0, 0], ["Romina Francheska Simbron Bernaola", "Asistente De Atracción Del Talento Humano", 70.8, 64.4, 0, 0, 0], ["Herman Antonio Valcarcel Dumet", "Coordinador(a) Operativo De Servicios Especiales", 70.7, null, 0, 1, 0], ["Juan Carlos Gonzalez Aira", "Jefe De Gestión Operativa", 70.7, 70.2, 0, 0, 0], ["Diego Alonso Parado Vega", "Asistente De Atracción Del Talento Humano", 70.7, null, 0, 0, 0], ["Juan Miguel Ortiz Uzuriaga", "Jefe De Operaciones Retail", 70.5, 71.5, 0, 1, 0], ["Karin Magaly Moron Huaman", "Coordinador(a) De Provincia / Sn", 70.3, 79.2, 0, 1, 0], ["Henry Mechato Chocca", "Asistente De Desarrollo Y Cultura Organizacional", 70.3, null, 0, 0, 0], ["Edinson Bladimir Vicente Lopez Salvador", "Asistente Legal", 70.3, null, 0, 1, 0], ["Wilson Raul Grande Yucra", "Supervisor(a) De Provincia", 70.1, 72.2, 0, 1, 0], ["Miriam Milagros Flores Castillejo", "Asistente De Facturación", 70.0, 72.3, 0, 1, 0], ["Victor Hugo Montoro Lopez", "Coordinador(a)  De Logistica", 69.5, 55.3, 0, 1, 0], ["Fanny Sandra Perez Lavado", "Analista De Facturacion", 69.5, 79.8, 0, 1, 0], ["Miguel Enrique Oviedo Galeano", "Coordinador(a) De Cuenta / Sn2", 69.3, 36.5, 0, 1, 0], ["Irene Nohelly Marquez Rengifo", "Coordinador(a) De Bienestar Social", 68.9, 69.4, 0, 1, 0], ["Abimael Oswaldo Quispe Saavedra", "Asistente De Retención Del Talento Humano", 68.5, 87.0, 0, 1, 0], ["Sandra Nataly Cerda Neyra", "Subgerente De Sistema De Gestión Integrado Y Sostenibilidad", 68.5, 63.8, 0, 1, 0], ["Lizet Del Pilar Tomanguilla Arias", "Subgerente De Finanzas", 68.4, 75.5, 0, 1, 0], ["Liseth Liliana Isidro Velasque", "Asistente De Atracción Del Talento Humano", 68.3, null, 1, 0, 0], ["William Manuel Silva Minaya", "Coordinador(a) De Cuenta / Sn2", 68.1, 50.8, 0, 1, 0], ["Sofia Alvarez Ortega", "Supervisor(a) De Provincia / N2", 68.0, null, 0, 0, 0], ["Daniel Alejandro Castillo Gonzalez", "Jefe De Operaciones Retail", 67.9, 76.3, 0, 0, 0], ["Diego Armando Dominguez Fernandini", "Coordinador(a) De Tesorería", 67.9, 64.0, 0, 1, 0], ["Dina Nereyda Gomez Yalico", "Asistente De Bienestar", 67.8, null, 0, 0, 0], ["Miguel Antonio Valle Hernandez", "Supervisor(a) De Cuenta", 67.5, null, 0, 1, 0], ["Noelia Katherine Taipicuri Quintana", "Jefe De Atraccion Del Talento Humano", 67.5, null, 0, 1, 0], ["Mariel Alessandra Mendoza Ubilluz", "Auxiliar Legal", 67.5, null, 0, 0, 0], ["Jesus Andres Leandro Jaco", "Asistente De Logistica", 67.5, null, 0, 0, 0], ["Mariela Adriana Larico Rodriguez De Garratt", "Asistente Administrativo / Sn2", 67.5, 71.0, 0, 1, 0], ["Sayra Janeth Manrique Suclupe", "Asistente Administrativo / Sn2", 67.5, 64.0, 0, 0, 0], ["Fiorella Amoretti Villanueva", "Analista De Gestion De Personal", 67.0, 64.0, 0, 1, 0], ["Gisella Del Socorro Llacsahuanga Velasquez", "Asistente Administrativo / Sn2", 67.0, 65.6, 0, 1, 0], ["Abner Pereda Olivos", "Supervisor(a) De Cuenta / N1", 66.5, null, 0, 0, 0], ["Luis Arturo Berrio Villafuerte", "Analista De Gestión Operativa / 08 Hrs", 66.4, 58.0, 0, 1, 0], ["Camila Rubi Cortez Alcantara", "Auxiliar De Gestion De Personal", 66.4, null, 1, 0, 0], ["Piero Jesus Navarro Quintana", "Supervisor(a) De Provincia / N1", 66.4, 64.0, 0, 0, 0], ["Ronald Alexander Tejada Tejada", "Supervisor(a) De Provincia / N1", 66.4, null, 1, 0, 0], ["Kevin Anival Marcelo Rojas", "Auxiliar De Gestion De Personal", 66.4, null, 1, 0, 0], ["Vanessa Antuaned Tapullima Salviati", "Analista De Desarrollo Y Cultura Organizacional", 66.2, null, 0, 0, 0], ["Javier Carlos Manzano Laura", "Jefe De Operaciones Retail", 66.1, 73.9, 0, 1, 0], ["Jean Pierre Tovar Bracamonte", "Asistente De Soporte Técnico", 66.1, 76.0, 0, 0, 0], ["Josselyn Milagros Lastarria Palomino", "Auxiliar De Atracción Del Talento Humano", 65.8, null, 0, 0, 0], ["Jherico Bryan Mancisidor Troncos", "Asistente De Soporte Técnico", 65.8, null, 0, 0, 0], ["Samir Ivan Quispe Arcos", "Auxiliar De Gestion De Personal", 65.8, null, 1, 0, 0], ["Beatriz Fortunata Gastelu Grandez", "Analista De Gestión Operativa / 08 Hrs", 65.6, null, 0, 1, 0], ["Jeffry Antony Rivas Rivas", "Auxiliar De Desarrollo Y Cultura Organizacional", 65.5, null, 0, 0, 0], ["Gerald Jeffri Lescano Palacios", "Supervisor(a) De Provincia / No Resid En Prov", 65.5, null, 0, 0, 0], ["Alberto Jose Pinango X", "Analista De Gestión Operativa / 08 Hrs", 65.5, null, 0, 0, 0], ["Maria Isarela Gonzales Chuquipiondo", "Coordinador(a) De Gestion De Personal", 65.4, 60.6, 0, 1, 0], ["Michael Richard Cosme Casas", "Coordinador(a) De Cuenta / Sn2", 65.2, 64.0, 0, 1, 0], ["Sara Estefania Ore Matias", "Asistente Comercial", 65.2, null, 0, 0, 0], ["Aldair Olivera Escobar", "Supervisor(a) De Cuenta / N1", 65.1, null, 0, 1, 0], ["Heidy Marily Sandoval Sernaque", "Supervisor(a) De Provincia", 65.1, 62.8, 0, 1, 0], ["Warren Yeltsyn Gilvonio Llashag", "Analista De Cga", 65.1, 49.2, 0, 1, 0], ["Mariela Elizabeth Vasquez Uriarte", "Asistente De Retención Del Talento Humano", 65.0, 71.5, 0, 0, 0], ["Martha Deysi Castillo Rodriguez", "Asistente De Retención Del Talento Humano", 65.0, 82.2, 0, 1, 0], ["Cristhian Alonso Neyra Espinoza", "Asistente De Retención Del Talento Humano", 65.0, 82.2, 0, 0, 0], ["Emily Mireya Ruiz Altamirano", "Asistente De Contabilidad", 65.0, null, 0, 0, 0], ["Miguel Angel Rivera Diaz", "Supervisor(a) De Provincia", 65.0, 63.2, 0, 0, 0], ["Vivian Alor Cabudivo", "Jefe De Gestion De Personal Y Compensaciones", 64.9, 64.0, 0, 1, 0], ["Olga Lucero Bernabe Gavino", "Supervisor(a) De Provincia / N1", 64.9, 57.2, 0, 1, 0], ["Maryrosa Vicente Salazar", "Asistente De Contabilidad", 64.9, null, 0, 0, 0], ["Augusto Junior Elias Barrenechea", "Supervisor(a) De Provincia", 64.9, 68.6, 0, 1, 0], ["Samir Alcides Cabrera Estrella", "Supervisor(a) De Cuenta", 64.7, 62.8, 0, 1, 0], ["Geraldine Rocio Yerba Pacompia", "Asistente De Operaciones", 64.7, null, 0, 0, 0], ["Gonzalo Quispe Saenz", "Coordinador(a) De Control De Gestión", 64.7, 87.0, 0, 0, 0], ["Nery Viviana Rojas Porras", "Supervisor(a) De Provincia", 64.6, 55.4, 0, 0, 0], ["Miriam Mercedes Galindo Ludeña", "Analista Comercial", 64.6, 64.8, 0, 1, 0], ["Luis Qqueccano Mirano", "Jefe De Operaciones De Vigilancia", 64.5, null, 0, 1, 0], ["Yoon Reber Macuri Chuquichaico", "Coordinador(a) De Cuenta / Sn2", 64.3, 53.8, 0, 1, 0], ["Carla Isabel Espinoza Sarmiento", "Supervisor(a) De Provincia / N1", 64.0, null, 0, 0, 0], ["Yaneth Alejandrina Valencia Alvarez", "Jefe De Operaciones Region Sur", 63.9, 79.6, 0, 1, 0], ["Jose Alejandro Hurtado Silva", "Supervisor(a) De Provincia / No Resid En Prov", 63.7, null, 1, 0, 0], ["Marycarmen Perez Bustamante", "Jefe De Operaciones Region Norte", 63.6, 80.2, 0, 1, 0], ["Antonio Salinas Contreras", "Coordinador(a) De Cuenta / Sn2", 63.5, 83.5, 0, 1, 0], ["Elvia Mercedes Arredondo Catano", "Coordinador(a) De Cuenta / Sn2", 63.4, null, 0, 1, 0], ["Rudy Ivan Yantas Amaro", "Asistente De Retención Del Talento Humano", 63.1, 74.7, 0, 1, 0], ["Erick Robinson Molina Pariona", "Asistente De Retención Del Talento Humano", 62.9, null, 0, 1, 0], ["Maria Del Rosario Rios Mendoza", "Asistente De Retención Del Talento Humano", 62.6, 91.5, 0, 1, 0], ["Armando Felix Gomero", "Jefe De Gestión Operativa", 62.3, null, 0, 1, 0], ["Estefany Yesenia Vega Rojas", "Asistente De Facturación", 62.3, null, 0, 0, 0], ["Kenny Ronald Fernandez Vediz", "Coordinador(a) De Provincia / Sn", 61.3, null, 0, 0, 0], ["Irene Recuay Paz", "Analista De Gestion De Personal", 61.3, 57.0, 0, 1, 0], ["Brigete Zorrilla Cusihuaman", "Auxiliar De Archivo", 61.2, null, 0, 0, 0], ["Dyanna Janett Yanqui Quijandria", "Analista De Compensaciones", 60.8, null, 0, 0, 0], ["Renzo Hernan Solano Onetti", "Asistente De Comunicación Interna", 60.8, 84.6, 0, 1, 0], ["Luis Anthony Povis Lobo", "Supervisor(a) De Provincia", 60.6, null, 0, 0, 0], ["Lucy Aurora Bellido Castro", "Jefe De Contabilidad", 60.2, 74.2, 0, 1, 0], ["Marlene Loaiza Villafuerte", "Asistente De Retención Del Talento Humano", 59.5, null, 0, 1, 0], ["Abel Rampas Rampas", "Supervisor(a) De Provincia / N1", 59.3, null, 1, 0, 0], ["Carlos Alexis Lujan Melendez", "Coordinador(a) De Provincia / Sn", 59.1, null, 1, 0, 0], ["Diego Julian Torres Reyna", "Supervisor(a) De Provincia / Resid En Prov", 58.9, null, 0, 0, 0], ["Christian Gonzalo Garcia Chicaisa", "Jefe De Operaciones Region Norte", 58.9, 75.9, 0, 1, 0], ["Jimmy Joel Espinoza Espinoza", "Supervisor(a) De Provincia / No Resid En Prov", 58.9, null, 0, 0, 0], ["Paola Mercedes Pena Mimbela", "Analista De Sucamec", 58.9, 42.4, 0, 1, 0], ["Edith Elena Bellido Olivera", "Asistente De Contabilidad", 58.5, null, 0, 0, 0], ["Juan Alberto Vilchez Huarcaya", "Analista De Cgo", 58.4, null, 0, 1, 0], ["Ana Rosa Villegas Anticona", "Analista De Contabilidad", 58.1, 62.4, 0, 1, 0], ["Jefferson Stuard Guidiche Canepa", "Coordinador(a) De Cuenta / Sn3", 58.1, 67.2, 0, 1, 0], ["Franklin Wilfredy Diaz Fernandez", "Asistente De Retención Del Talento Humano", 57.9, null, 0, 0, 0], ["Anthony Mauro Alarcon Rivas", "Coordinador(a) De Provincia / Sn", 57.6, 74.6, 0, 0, 0], ["Gonzalo Martin Delgado Vizcardo", "Jefe De Operaciones Región Centro", 57.4, null, 0, 0, 0], ["Rufina Bertila Robles Mendoza", "Asistente De Desarrollo Y Cultura Organizacional", 56.4, 87.0, 0, 1, 0]],
+  3:[["Britney Maryoly Onofre Terres", "Auxiliar De Gestion De Personal", 54.7, null, 1, 0, 0], ["Cristian Glorioso Montes Pajuelo", "Jefe De Grupo / Rpy", 54.2, 63.6, 0, 0, 0], ["Virgilia Isabel Hernandez Gamero", "Analista De Planeamiento Operativo / 12 Hrs", 54.2, null, 0, 1, 0], ["Nancy Pumaccajia Gutierrez", "Asistente Administrativo / Sn2", 53.0, 64.0, 0, 1, 0], ["Ingrid Luz Puma Seibt", "Coordinador(a) Senior De Atracción Del Talento Humano", 52.5, 56.4, 0, 1, 0], ["Sofia Teresa Llontop Espinoza", "Analista De Contabilidad", 52.1, 61.8, 0, 1, 0], ["Angelica Esperanza Ruesta Sanchez", "Coordinador(a) De Provincia / Sn", 51.2, 75.9, 0, 1, 0], ["Isabel Alondra Aguado Hernandez", "Asistente Administrativo / Sn2", 50.8, 57.9, 0, 0, 0], ["Alejandrina Elizabeth Sanchez Nieto", "Analista De Desarrollo Y Cultura Organizacional", 50.7, null, 0, 1, 0], ["Jorge Luis Bulnes Burgos", "Supervisor(a) De Provincia / N1", 50.6, null, 0, 1, 0], ["Edward Omar Calle Cotos", "Coordinador(a) De Provincia / N3", 50.6, 48.6, 0, 1, 0], ["Hans Jonathan Peralta Suclupe", "Supervisor(a) De Provincia", 50.2, null, 1, 0, 0], ["Sandi Paola Diaz Avila", "Jefe De Operaciones Region Sur", 49.6, null, 1, 0, 0], ["Jorge Andree Fabian Rojas Fernandez", "Analista De Planeamiento Operativo / 12 Hrs", 47.5, null, 1, 0, 0], ["Jackeline Camayo Montero", "Asistente Administrativo / Sn2", 47.1, 47.3, 0, 0, 0]],
+  1:[["Harold Bustamante Lozano", "Analista De Tesoreria", 38.7, null, 0, 0, 0]],
+};
+
+function renderNineBoxFull(){
+  const counts = {9:17,8:25,7:23,6:226,3:15,1:1};
+  const QORD=[[5,8,9],[2,6,7],[1,3,4]];
+  let ngHtml = '<div class="ng">';
+  QORD.forEach(row=>row.forEach(q=>{
+    const n = counts[q]||0;
+    ngHtml += `<div class="nc" style="background:${QCOLS[q]}" onclick="showQFull(${q})"><div class="nn">${n}</div><div class="nq">Q${q}</div></div>`;
+  }));
+  ngHtml += '</div>';
+  document.getElementById('p2').innerHTML = `
+    <div class="card" style="background:#0a1a18;border:1px solid #2bd5c4"><div style="font-size:14px;font-weight:600;color:#2bd5c4;margin-bottom:5px">① Nine Box — Toda la compañía (316)</div>
+      <div style="font-size:13px;color:#c5c5c5;line-height:1.6">Posiciona a cada colaborador según <strong style="color:#fff">objetivos</strong> (horizontal) y <strong style="color:#fff">competencias</strong> (vertical).</div>
+    </div>
+    <div class="st" style="margin-top:0"><span class="snum">2</span>Matriz interactiva</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+      <div style="flex-shrink:0">${ngHtml}
+        <div style="margin-top:10px;font-size:10.5px;color:#c5c5c5">♾ Indeterminado · <span style="color:#6dd56d">↑ Ascenso</span></div>
+      </div>
+      <div class="qd" id="qdBox"><div style="font-size:14px;color:#c5c5c5">Selecciona un cuadrante para ver el detalle</div></div>
+    </div>
+  `;
+}
+function showQFull(q){
+  let ppl = (FULL_Q[q]||[]).slice();
+  ppl.sort((a,b)=>b[2]-a[2]);
+  renderQTable(ppl, q, 'qdBox');
+}
+
+function renderQTable(ppl, q, boxId){
+  const col = QCOLS[q];
+  const box = document.getElementById(boxId);
+  if(!ppl || ppl.length===0){ box.innerHTML = `<div style="font-size:14px;color:#c5c5c5">Sin colaboradores en este cuadrante.</div>`; return; }
+  box.innerHTML = `<div style="font-size:15px;font-weight:500;color:${col};margin-bottom:3px">Cuadrante ${q} — ${ppl.length} colaboradores</div>
+    <div style="font-size:12.5px;color:#c5c5c5;margin-bottom:10px">${QDESC[q]||''}</div>
+    <table class="tbl"><thead><tr><th>#</th><th>Nombre</th><th>Cargo</th><th>% 2025</th><th>% 2026</th><th>Status</th></tr></thead>
+    <tbody>${ppl.map((p,i)=>{
+      const p25 = (p[3]===null||p[3]===undefined) ? '<span style="color:#666">-</span>' : `${p[3]}%`;
+      let arrow = '';
+      if(p[3]!==null && p[3]!==undefined){
+        if(p[2]>p[3]) arrow = ' <span style="color:#6dd56d">▲</span>';
+        else if(p[2]<p[3]) arrow = ' <span style="color:#f07070">▼</span>';
+      }
+      const ascTag = p[6] ? ' <span class="bdg bt-asc" style="font-size:9px">↑</span>' : '';
+      return `<tr><td style="color:#666">${i+1}</td><td>${p[0]}${ascTag}</td><td style="font-size:11px;color:#c5c5c5">${p[1]}</td><td style="color:#bebebe">${p25}</td><td style="font-weight:500;color:${col}">${p[2]}%${arrow}</td><td><span class="bdg ${p[4]?'bt-ces':'bt-act'}" style="font-size:10px">${p[4]?'Cesado':'Activo'}</span></td></tr>`;
+    }).join('')}</tbody></table>`;
+}
+
+// ===== HOJA 3: CESADOS =====
+function renderCesados(){
+  const CES=[["Mario Kelmer Andi Chujutalli","Operaciones",87.6,"RENUNCIA",1],["Cruhis Anthony Torres Gonzales","Control Gestión",84.7,"RENUNCIA",0],["Cesar Martin Moran Ynfantes","Operaciones",84.5,"RENUNCIA",0],["Gaston Eduardo Jauregui Ramos","SGI",83.9,"RENUNCIA",0],["Gustavo Francisco Cuadros Felix","Control Gestión",83.2,"RENUNCIA",0],["Ana Cristina Portocarrero Jaico","Atracción T.H.",80.6,"RENUNCIA",0],["Adrian Anibal Cereceda Caceres","SGI",79.6,"TÉRMINO",0],["Maria Fernanda Jimenez Perea","Atracción T.H.",78.2,"TÉRMINO",0],["Marcelo Andre Vargas Mendoza","Logística",78.0,"RENUNCIA",0],["Jhon Brayan Rojas Quispe","Operaciones",77.8,"RENUNCIA",0],["Leonardo Daniel Huapaya Espino","Desarrollo",74.9,"RENUNCIA",0],["Roberto Leonidas Castillo Guerrero","Operaciones",71.9,"RENUNCIA",0],["Greisy Paola Sovero Huatuco","Bienestar Social",71.7,"RENUNCIA",0],["Giannina Lucia Pestana Guglielmino","Gestión Humana",71.5,"DESPIDO",0],["Jose Antonio Higinio Anlas","Operaciones",71.4,"TÉRMINO",0],["Rosa Liliana Challco Chapilliquen","Atracción T.H.",71.2,"RENUNCIA",0],["Liseth Liliana Isidro Velasque","Atracción T.H.",68.3,"MUTUO",0],["Ronald Alexander Tejada Tejada","Operaciones",66.4,"RENUNCIA",0],["Camila Rubi Cortez Alcantara","GP y Comp.",66.4,"RENUNCIA",0],["Kevin Anival Marcelo Rojas","GP y Comp.",66.4,"TÉRMINO",0],["Samir Ivan Quispe Arcos","GP y Comp.",65.8,"RENUNCIA",0],["Jose Alejandro Hurtado Silva","Operaciones",63.7,"TÉRMINO",0],["Abel Rampas Rampas","Operaciones",59.3,"RENUNCIA",0],["Carlos Alexis Lujan Melendez","Operaciones",59.1,"TÉRMINO",0],["Britney Maryoly Onofre Terres","GP y Comp.",54.7,"TÉRMINO",0],["Hans Jonathan Peralta Suclupe","Operaciones",50.2,"TÉRMINO",0],["Sandi Paola Diaz Avila","Operaciones",49.6,"RENUNCIA",0],["Jorge Andree Fabian Rojas Fernandez","Operaciones",47.5,"TÉRMINO",0],["Daniela Quintanilla Rodriguez","Gerencia General",0,"MUTUO",0]];
+  let rowsHtml = '';
+  CES.forEach((c,i)=>{
+    const pv = c[2]===0?'S/R':c[2]+'%';
+    const cat = c[2]===0?{l:'Sin resultado',c:'cat-req'}:getCat(c[2]);
+    const mCls = c[3]==='RENUNCIA'?'bt-ces':c[3]==='TÉRMINO'?'cat-req':c[3]==='DESPIDO'?'bt-ces':'cat-req';
+    rowsHtml += `<tr style="${c[4]?'background:#200a0a':''}"><td style="color:#666">${i+1}</td><td style="color:${c[4]?'#f07070':'#e7e7e7'}">${c[0]}${c[4]?' ⭐':''}</td><td style="color:#c5c5c5">${c[1]}</td><td style="font-weight:500">${pv}</td><td><span class="bdg ${cat.c}" style="font-size:11px">${cat.l}</span></td><td><span class="bdg ${mCls}" style="font-size:11px">${c[3]}</span></td></tr>`;
+  });
+  document.getElementById('p3').innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px;margin-bottom:14px">
+      <div class="kpi"><div class="klbl">Total cesados</div><div class="kval kv-r">29</div></div>
+      <div class="kpi"><div class="klbl">Top Talent cesado</div><div class="kval kv-r">1</div></div>
+      <div class="kpi"><div class="klbl">Renuncia</div><div class="kval" style="color:#f07070">58.6%</div></div>
+      <div class="kpi"><div class="klbl">Término</div><div class="kval kv-a">31.0%</div></div>
+    </div>
+    <div class="g2">
+      <div><div class="st" style="margin-top:0"><span class="snum">1</span>Motivos</div>
+        <div class="card">
+          <div class="br"><span class="bl" style="width:160px">Renuncia</span><div class="bt"><div class="bf" style="width:59%;background:#f07070"><span class="bv" style="color:#1a0a0a">17</span></div></div></div>
+          <div class="br"><span class="bl" style="width:160px">Término</span><div class="bt"><div class="bf" style="width:31%;background:#f5c06a"><span class="bv" style="color:#3a2c10">9</span></div></div></div>
+          <div class="br"><span class="bl" style="width:160px">Mutuo</span><div class="bt"><div class="bf" style="width:7%;background:#4a8f87"><span class="bv" style="color:#c9f2ed">2</span></div></div></div>
+        </div>
+        <div style="background:#1a0808;border-left:3px solid #f07070;border-radius:0 7px 7px 0;padding:10px 14px;font-size:13px;color:#f07070;line-height:1.5"><strong>Alerta:</strong> 7 cesados con resultado ≥80%.</div>
+      </div>
+      <div><div class="st" style="margin-top:0"><span class="snum">2</span>Listado completo</div>
+        <div class="card" style="padding:6px 8px;max-height:520px;overflow-y:auto">
+          <table class="tbl"><thead><tr><th>#</th><th>Nombre</th><th>Área</th><th>%</th><th>Cat</th><th>Motivo</th></tr></thead><tbody>${rowsHtml}</tbody></table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ===== HOJA 4: PLAN 45 DÍAS =====
+function renderPlan45(){
+  const PROFS=[
+    {col:"#f07070",bg:"#200a0a",label:"Brecha en Competencias",n:8,ppl:["Cristian Glorioso Montes Pajuelo","Virgilia Isabel Hernandez Gamero","Sofia Teresa Llontop Espinoza","Angelica Esperanza Ruesta Sanchez","Isabel Alondra Aguado Hernandez","Jorge Luis Bulnes Burgos","Edward Omar Calle Cotos","Jackeline Camayo Montero"],cargos:["Jefe de Grupo/RPY","Analista Planeamiento","Analista Contabilidad","Coordinador Provincia","Asistente Adm. Sn2","Supervisor Provincia N1","Coordinador Provincia N3","Asistente Adm. Sn2"]},
+    {col:"#f5c06a",bg:"#201808",label:"Brecha Mixta",n:6,ppl:["Nancy Pumaccajia Gutierrez","Ingrid Luz Puma Seibt","Alejandrina Elizabeth Sanchez Nieto","Sandi Paola Diaz Avila","Jorge Andree Fabian Rojas Fernandez","Britney Maryoly Onofre Terres"],cargos:["Asistente Adm. Sn2","Coord. Senior Atracción T.H.","Analista Desarrollo","Jefe Op. Región Sur","Analista Planeamiento","Auxiliar Gestión Personal"]},
+    {col:"#2bd5c4",bg:"#082018",label:"Brecha en Objetivos",n:1,ppl:["Hans Jonathan Peralta Suclupe"],cargos:["Supervisor de Provincia"]}
+  ];
+  let profHtml = '';
+  PROFS.forEach((pr,idx)=>{
+    const id = `pr${idx}`;
+    profHtml += `<div class="card" style="cursor:pointer" onclick="document.getElementById('${id}').classList.toggle('open')">
+      <div style="display:flex;align-items:center;gap:9px">
+        <div style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;background:${pr.bg};border:1.5px solid ${pr.col};color:${pr.col}">${pr.n}</div>
+        <div style="font-size:14px;font-weight:500;color:#fff;flex:1">${pr.label}</div>
+        <div style="font-size:13px;color:${pr.col}">${pr.n} ▸</div>
+      </div>
+      <div id="${id}" style="display:none;margin-top:9px;border-top:1px solid #3a3a3a;padding-top:9px">
+        <table class="tbl"><tbody>${pr.ppl.map((p,i)=>`<tr><td style="color:#666">${i+1}</td><td>${p}</td><td style="font-size:12px;color:#c5c5c5">${pr.cargos[i]}</td></tr>`).join('')}</tbody></table>
+      </div>
+    </div>`;
+  });
+  const STEPS=[
+    {n:"1",col:"#2bd5c4",bg:"#082018",t:"Reunión con líderes",pl:"Sem 1"},
+    {n:"2",col:"#f5c06a",bg:"#201808",t:"Firma de compromisos",pl:"Días 1-7"},
+    {n:"3",col:"#4a8f87",bg:"#081818",t:"Seguimiento 15-30-45",pl:"Días 15-45"},
+    {n:"4",col:"#f5c06a",bg:"#201808",t:"Validación del líder",pl:"Días 42-44"},
+    {n:"5",col:"#bebebe",bg:"#1a1a1a",t:"Decisión ejecutiva",pl:"Día 45"}
+  ];
+  let stepsHtml = '';
+  STEPS.forEach(s=>{
+    stepsHtml += `<div style="display:flex;gap:9px;margin-bottom:11px"><div style="width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:${s.bg};border:2px solid ${s.col};color:${s.col}">${s.n}</div><div style="flex:1;background:#2b2b2b;border-radius:8px;padding:11px 14px"><div style="display:flex;gap:8px"><div style="font-size:14px;font-weight:500;color:#fff;flex:1">${s.t}</div><span style="font-size:11.5px;padding:3px 9px;border-radius:20px;background:${s.bg};color:${s.col}">${s.pl}</span></div></div></div>`;
+  });
+  document.getElementById('p4').innerHTML = `
+    <div style="background:#081a18;border-left:3px solid #2bd5c4;border-radius:0 7px 7px 0;padding:10px 14px;margin-bottom:11px;font-size:14px;color:#2bd5c4;line-height:1.5">Feedbackton realizado con todo el Q3.</div>
+    <div class="g2">
+      <div><div class="st" style="margin-top:0"><span class="snum">1</span>Brecha Q3</div>
+        <div class="card">
+          <div class="br"><span class="bl" style="width:190px">Planificación</span><div class="bt"><div class="bf" style="width:67%;background:#f07070"><span class="bv" style="color:#1a0a0a">67%</span></div></div></div>
+          <div class="br"><span class="bl" style="width:190px">Conflictos</span><div class="bt"><div class="bf" style="width:53%;background:#f07070"><span class="bv" style="color:#1a0a0a">53%</span></div></div></div>
+          <div class="br"><span class="bl" style="width:190px">Gestión Personas</span><div class="bt"><div class="bf" style="width:53%;background:#f5c06a"><span class="bv" style="color:#3a2c10">53%</span></div></div></div>
+          <div class="br"><span class="bl" style="width:190px">Supervisión</span><div class="bt"><div class="bf" style="width:40%;background:#f5c06a"><span class="bv" style="color:#3a2c10">40%</span></div></div></div>
+        </div>
+        <div class="st"><span class="snum">2</span>Perfiles</div>
+        ${profHtml}
+        <div class="st"><span class="snum">3</span>5 pasos</div>
+        ${stepsHtml}
+      </div>
+      <div><div class="st" style="margin-top:0"><span class="snum">4</span>Ficha 3 dimensiones</div>
+        <div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;background:#082018">👤</div><div style="font-size:14.5px;font-weight:600;color:#fff">Colaborador</div></div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0;border-bottom:1px solid #3a3a3a">▸ Participar en capacitaciones</div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0;border-bottom:1px solid #3a3a3a">▸ Presentar certificados</div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0">▸ Cumplir tareas y reportar</div></div>
+        <div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;background:#1a0e05">🧑‍💼</div><div style="font-size:14.5px;font-weight:600;color:#fff">Líder</div></div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0;border-bottom:1px solid #3a3a3a">▸ Check-in semanal</div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0;border-bottom:1px solid #3a3a3a">▸ Definir 2 objetivos</div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0">▸ Retroalimentación</div></div>
+        <div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;background:#0a1a3a">🏢</div><div style="font-size:14.5px;font-weight:600;color:#fff">Empresa</div></div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0;border-bottom:1px solid #3a3a3a">▸ Talleres de competencias</div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0;border-bottom:1px solid #3a3a3a">▸ Seguimiento quincenal</div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0">▸ Informe final</div></div>
+      </div>
+    </div>
+  `;
+}
+
+// ===== HOJA 5: VOZ DEL TOP TALENT =====
+function renderVozTalento(){
+  const SENTS=[
+    {lbl:"Disfruto mis funciones",pct:100,col:"#6dd56d"},
+    {lbl:"Reto positivo",pct:100,col:"#6dd56d"},
+    {lbl:"Aporto a objetivos ISEG",pct:100,col:"#6dd56d"},
+    {lbl:"Motivado en mi puesto",pct:92,col:"#2bd5c4"},
+    {lbl:"Me visualizo 3 años",pct:92,col:"#2bd5c4"},
+    {lbl:"Veo oportunidades",pct:92,col:"#f5c06a"},
+    {lbl:"Seguiría en ISEG",pct:92,col:"#2bd5c4"}
+  ];
+  let sentHtml = '';
+  SENTS.forEach(s=>{
+    sentHtml += `<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span style="font-size:13.5px;color:#e7e7e7">${s.lbl}</span><span style="font-size:15px;font-weight:500;color:${s.col}">${s.pct}%</span></div><div style="background:#454545;border-radius:4px;height:11px"><div style="width:${s.pct}%;height:100%;background:${s.col};border-radius:4px"></div></div></div>`;
+  });
+  document.getElementById('p5').innerHTML = `
+    <div style="background:#2b2b2b;border-radius:10px;padding:15px 18px;margin-bottom:14px;display:flex;align-items:center;gap:14px">
+      <div style="font-size:38px">🌟</div>
+      <div><div style="font-size:17px;font-weight:600;color:#fff">Voz del Top Talent — 13 entrevistados</div></div>
+    </div>
+    <div class="st" style="margin-top:0"><span class="snum">1</span>¿Cómo se sienten?</div>
+    <div class="card">${sentHtml}</div>
+    <div class="st"><span class="snum">2</span>Qué necesitan aprender</div>
+    <div class="card">
+      <div style="display:flex;flex-wrap:wrap;gap:7px">
+        <span class="bdg" style="background:#1a1020;color:#d090e0;font-size:15px;padding:6px 13px">Power BI 7/13</span>
+        <span class="bdg" style="background:#1a1020;color:#c080d0;font-size:13px;padding:6px 13px">Gestión de personas 6/13</span>
+        <span class="bdg" style="background:#0a1a30;color:#6090e0;font-size:13px;padding:6px 13px">Liderazgo 6/13</span>
+        <span class="bdg" style="background:#0a1a30;color:#7090d0;font-size:13px;padding:6px 13px">Excel 5/13</span>
+      </div>
+    </div>
+    <div class="st"><span class="snum">3</span>Reconocimiento — 3 dimensiones</div>
+    <div class="g2">
+      <div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;background:#3a2c05">🏆</div><div style="font-size:14.5px;font-weight:600;color:#fff">Reconocimiento</div></div>
+        <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0;border-bottom:1px solid #3a3a3a">▸ Certificado semestral + pin</div>
+        <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0">▸ Mención en comunicación interna</div></div>
+      <div>
+        <div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;background:#082018">📈</div><div style="font-size:14.5px;font-weight:600;color:#fff">Desarrollo</div></div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0;border-bottom:1px solid #3a3a3a">▸ Capacitaciones prioritarias</div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0">▸ Mentoría a otros</div></div>
+        <div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;background:#0a1a3a">💰</div><div style="font-size:14.5px;font-weight:600;color:#fff">Retención</div></div>
+          <div style="font-size:13.5px;color:#c5c5c5;padding:5px 0">▸ Incremento o gift card</div></div>
+      </div>
+    </div>
+  `;
+}
+
+function sp(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  const map = {p1:0,p2:1,p3:2,p4:3,p5:4};
+  const idx = map[id]||0;
+  const tabs = document.querySelectorAll('.tab');
+  if(tabs[idx]) tabs[idx].classList.add('on');
+}
+</script>
+</body>
+</html>
